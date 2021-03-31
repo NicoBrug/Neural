@@ -7,7 +7,7 @@ This project aims at building a framework dedicated to the implementation of art
 ## 🔧 How to Use
 1. Clone the repo
    ```sh
-   git clone https://github.com//NicoBrug/unity-sensors
+   git clone https://github.com//NicoBrug/AIPython
    ```
 2. ```sh
    python3 main.py
