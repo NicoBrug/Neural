@@ -1,3 +1,0 @@
-/home/user/Documents/neuralnetworks/Neural/build/CMakeFiles/rebuild_cache.dir
-/home/user/Documents/neuralnetworks/Neural/build/CMakeFiles/edit_cache.dir
-/home/user/Documents/neuralnetworks/Neural/build/CMakeFiles/Neural.dir
