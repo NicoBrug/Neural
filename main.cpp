@@ -63,7 +63,7 @@ int main() {
     net.Save("My_Amazing_Weights");
 
     //Load the weights
-    net.Load("My_Amazing_Weights.json");
+    net.Load("../net.json");
 
     return 0;
 }

@@ -2,11 +2,14 @@
 #define NETWORK_H
 
 #include <iostream>
+#include <stdlib.h>
 #include <eigen3/Eigen/Dense>
 #include <vector> 
 #include <string> 
 #include "layer.h"
 #include <fstream>
+#include <jsoncpp/json/json.h>
+#include <jsoncpp/json/writer.h>
 
 class Network
 {
@@ -24,6 +27,8 @@ class Network
 
 
     private:
+        Json::Value ParseMatrix(Eigen::MatrixXd x, Eigen::MatrixXd b);
+
         std::vector<Layer*> m_layer;
         std::vector<double> m_error;
         std::ofstream file;

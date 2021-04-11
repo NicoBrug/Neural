@@ -16,7 +16,10 @@ class Fc_Layer : public Layer
         Eigen::MatrixXd Backward_propagation(Eigen::MatrixXd output_error, float learning_rate);
         Eigen::MatrixXd RandomMatrix(int row, int col, float min, float max);
         Eigen::MatrixXd GetWeights();
+        Eigen::MatrixXd GetBias();
+
         void SetWeights(Eigen::MatrixXd weights);
+        void SetBias(Eigen::MatrixXd weights);
 
     protected:
         Eigen::MatrixXd m_weights;
