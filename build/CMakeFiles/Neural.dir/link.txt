@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/Neural.dir/src/network.cpp.o CMakeFiles/Neural.dir/src/fc_layer.cpp.o CMakeFiles/Neural.dir/src/layer.cpp.o CMakeFiles/Neural.dir/src/activation_layer.cpp.o CMakeFiles/Neural.dir/main.cpp.o  -o Neural  -ljsoncpp -ljsoncpp 
