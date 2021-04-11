@@ -10,11 +10,15 @@
 #include <fstream>
 #include <jsoncpp/json/json.h>
 #include <jsoncpp/json/writer.h>
+#include "fc_layer.h"
+#include "activation_layer.h"
 
 class Network
 {
     public:
         Network();
+        Network(std::string);
+
         ~Network();
 
         void Add(Layer *layer);
@@ -27,7 +31,7 @@ class Network
 
 
     private:
-        Json::Value ParseMatrix(Eigen::MatrixXd x, Eigen::MatrixXd b);
+        Json::Value Serialise(Eigen::MatrixXd x, Eigen::MatrixXd b);
 
         std::vector<Layer*> m_layer;
         std::vector<double> m_error;

@@ -12,6 +12,7 @@
 					0.53061171352031711
 				]
 			],
+			"type" : "FcLayer",
 			"weights" : 
 			[
 				[
@@ -31,12 +32,16 @@
 			]
 		},
 		{
+			"type" : "ActivationLayer"
+		},
+		{
 			"bias" : 
 			[
 				[
 					0.032948155359980476
 				]
 			],
+			"type" : "FcLayer",
 			"weights" : 
 			[
 				[
@@ -55,6 +60,9 @@
 					0.23556427977135461
 				]
 			]
+		},
+		{
+			"type" : "ActivationLayer"
 		}
 	]
 }

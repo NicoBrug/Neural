@@ -6,19 +6,46 @@ using namespace std;
 using Eigen::MatrixXd;
 using namespace Eigen;
 
+/** Constructor network with no argument
+ * 
+ */
 Network::Network(){
+    cout << "no specified network, if you wan't load network, please use constructor Network(string path)" << endl;
+
 };
 
+/** Constructor network with path of exist save network
+ * 
+ */
+Network::Network(string s){
+    Load(s);
+};
+
+/** Destructor -> liberate Layer memory
+ * 
+ */
 Network::~Network(){
     for (int i(0); i< m_layer.size(); i++){
         delete(m_layer[i]);
     }
 };
 
+/** Adding a Layer to Network
+ * 
+ *  @param layer The pointer of the Layer Mother (class Layer)
+ *  @return void
+ * 
+ */
 void Network::Add(Layer *layer){
     m_layer.push_back(layer);
 };
 
+/** Predict data based on input data, forward propagation throughout the network 
+ * 
+ *  @param input_data Matrix Input data
+ *  @return vector<MatrixXd> The array of Matrix output res
+ * 
+ */
 vector<MatrixXd> Network::Predict(MatrixXd input_data){
     int samples = input_data.rows();
 
@@ -39,6 +66,15 @@ vector<MatrixXd> Network::Predict(MatrixXd input_data){
     return res;
 };
 
+/** Train the network on a set of data and a set of results, this is for set the good weights and bias
+ * 
+ *  @param x_train Matrix Input data
+ *  @param y_train Matrix Result data
+ *  @param epochs Number of iteration
+ *  @param learning_rate The step size at each iteration
+ *  @return void
+ * 
+ */
 void Network::Fit(MatrixXd x_train, MatrixXd y_train, int epochs, double learning_rate){
     int samples = x_train.rows();
     int cols = x_train.cols();
@@ -72,17 +108,36 @@ void Network::Fit(MatrixXd x_train, MatrixXd y_train, int epochs, double learnin
 }
 
 
+/** Mean Squared Error function, use to calculate the error between 2 data Matrix
+ * 
+ *  @param y_true Matrix Input data
+ *  @param y_pred Matrix Result data
+ *  @return double : error
+ * 
+ */
 double Network::Mse(MatrixXd y_true, MatrixXd y_pred){
     MatrixXd diff = y_true-y_pred;
     return diff.array().pow(2).mean();
 }
 
-
+/** Derivative Mean Squared Error function, use to calculate the derivate of error between 2 data Matrix, use for retropropagation
+ * 
+ *  @param y_true Matrix Input data
+ *  @param y_pred Matrix Pred data
+ *  @return MatrixXd 
+ * 
+ */
 MatrixXd Network::Mse_prime(MatrixXd y_true, MatrixXd y_pred){
     MatrixXd diff = y_pred-y_true;  
     return 2*diff/y_true.size();
 }
 
+/** Save network state in json file
+ * 
+ *  @param name String name of file we wan't to create
+ *  @return true if Save 
+ * 
+ */
 bool Network::Save(string name){
     file.open (name+".json");
 
@@ -93,9 +148,17 @@ bool Network::Save(string name){
         if (m_layer[l]->AsWeights()){
             MatrixXd weights = static_cast<Fc_Layer*>(m_layer[l])->GetWeights();
             MatrixXd bias = static_cast<Fc_Layer*>(m_layer[l])->GetBias();
+            cout << "weights" << weights << endl;
+            cout << "bias" << bias << endl;
 
-            Json::Value json = ParseMatrix(weights,bias);
+            Json::Value json = Serialise(weights,bias);
             vect.append(json);
+
+        }else{
+            Json::Value result;
+            result["type"] = "ActivationLayer" ;
+            vect.append(result);
+
         }
 
     }
@@ -108,7 +171,12 @@ bool Network::Save(string name){
     return true;
 }   
 
-
+/** Load network state for json file, different type of Layer, Weight, Bias, and create Network from data loaded
+ * 
+ *  @param name String name of file we wan't to create
+ *  @return void
+ * 
+ */
 void Network::Load(string path){
 
     Json::Value root;
@@ -119,42 +187,48 @@ void Network::Load(string path){
      for ( int i(0); i < net.size(); ++i ){
         Json::Value Layer = net[i];
 
-        Json::Value weights = Layer["weights"];
-        Json::Value bias = Layer["bias"];
-
-        int input_size = weights.size();
-        int output_size = weights[0].size();
-
-        MatrixXd weights_matrix(input_size,output_size);
-        MatrixXd bias_matrix(1,output_size);
-
-        for ( int j(0); j < weights.size(); ++j ){
-            Json::Value w = weights[j];
-
-            for ( int k(0); k < w.size(); ++k ){
-                double val = stod(w[k].asString()); 
-                weights_matrix(j,k) = val;   
-            }
+        if (Layer["type"] == "ActivationLayer"){
+                Activation_layer* acl = new Activation_layer();
+                this->Add(acl);
         }
-        
-        Json::Value b = bias[0];
-        cout << b.size() << endl;
-        for ( int j(0); j < b.size(); ++j ){
-                double val = stod(b[j].asString()); 
-                bias_matrix(0,j) = val;    
-        }
+        if (Layer["type"] == "FcLayer"){                
+                Json::Value weights = Layer["weights"];
+                Json::Value bias = Layer["bias"];
 
-        cout << "Layer " << i << " " << " Weight \n" << endl;
-        cout << weights_matrix << endl;
-        
-        cout << "Layer " << i << " " << " Bias \n" << endl;
-        cout << bias_matrix << endl; 
+                int input_size = weights.size();
+                int output_size = weights[0].size();
+
+                MatrixXd weights_matrix(input_size,output_size);
+                MatrixXd bias_matrix(1,output_size);
+
+                for ( int j(0); j < weights.size(); ++j ){
+                    Json::Value w = weights[j];
+                    for ( int k(0); k < w.size(); ++k ){
+                        double val = stod(w[k].asString()); 
+                        weights_matrix(j,k) = val;   
+                    }
+                }
+                Json::Value b = bias[0];
+                cout << b.size() << endl;
+                for ( int j(0); j < b.size(); ++j ){
+                        double val = stod(b[j].asString()); 
+                        bias_matrix(0,j) = val;    
+                }
+
+                Fc_Layer* fcl = new Fc_Layer(weights_matrix,bias_matrix);
+                this->Add(fcl);
+        }
     }  
- 
 }
 
-
-Json::Value Network::ParseMatrix(MatrixXd w, MatrixXd b)
+/** Serialise bias and wheight to json
+ * 
+ *  @param w Matrix of weight we wan't to serialise
+ *  @param b Matrix of bias we wan't to serialise
+ *  @return Json::Value
+ * 
+ */
+Json::Value Network::Serialise(MatrixXd w, MatrixXd b)
 {
     Json::Value result;
     Json::Value weights(Json::arrayValue);
@@ -181,7 +255,8 @@ Json::Value Network::ParseMatrix(MatrixXd w, MatrixXd b)
         bias.append(rows);
     }
 
-    result["weights"] = weights ;
+    result["weights"] = weights ; 
+    result["type"] = "FcLayer" ;
     result["bias"] = bias;
 
     return result;

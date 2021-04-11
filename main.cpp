@@ -35,11 +35,10 @@ int main() {
             1,0; // -> 1
 
 
-    cout << "Data \n" << x_data << endl;
-    cout << "Train \n" << x_train << endl;
     
     //Create Network
-    Network net;
+    //Network net("../net.json");
+    Network net ;
 
     //Create Layer -> Fc Layer = full connected layer    
     Fc_Layer* fcl1 = new Fc_Layer(2,5);
@@ -51,19 +50,21 @@ int main() {
     net.Add(fcl1);
     net.Add(acl1);
     net.Add(fcl2);
-    net.Add(acl2);
+    net.Add(acl2); 
 
     // Train the network 
     net.Fit(x_data,x_train,1000,0.1);
-    
-    //Call predict test
-    net.Predict(x_test);
+ 
+
     
     //Save (in json)
     net.Save("My_Amazing_Weights");
+    //net.Load("../net.json");
+
+    //Call predict test
+    net.Predict(x_test);
 
     //Load the weights
-    net.Load("../net.json");
 
     return 0;
 }

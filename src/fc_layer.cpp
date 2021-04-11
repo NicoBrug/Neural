@@ -4,14 +4,28 @@ using namespace std;
 using Eigen::MatrixXd;
 using namespace Eigen;
 
-/** Constructor of the Full connected Layer
+/** Constructor of the Full connected Layer, Generate Weight & Bias random Matrix 
  * 
- * 
+ *  @param input_size size of rows  
+ *  @param output_size size of cols  
+ *
  */
 Fc_Layer::Fc_Layer(int input_size, int output_size){
     this->m_as_weight = true;
     this->m_weights = RandomMatrix(input_size,output_size,-0.5,0.5);
     this->m_bias = RandomMatrix(1,output_size,-0.5,0.5);
+};
+
+/** Constructor of the Full connected Layer, Fill Weight & Bias with preexistant Matrix 
+ * 
+ *  @param weights Matrix of weight  
+ *  @param bias size of cols  
+ *
+ */
+Fc_Layer::Fc_Layer(MatrixXd weights, MatrixXd bias){
+    this->m_as_weight = true;
+    this->m_weights = weights;
+    this->m_bias = bias;
 };
 
 /** Performs forward propagation on the current layer
@@ -56,8 +70,8 @@ MatrixXd Fc_Layer::Backward_propagation(MatrixXd output_error, float learning_ra
 MatrixXd Fc_Layer::RandomMatrix(int rows, int cols, float min, float max){
     double range= max-min;
     
-    MatrixXd m = MatrixXd::Random(rows,cols); // n*p Matrix filled with random numbers between (-1,1)
-    m = (m + MatrixXd::Constant(rows,cols,1.))*range/2.; // add 1 to the matrix to have values between 0 and 2; multiply with range/2
+    MatrixXd m = MatrixXd::Random(rows,cols); 
+    m = (m + MatrixXd::Constant(rows,cols,1.))*range/2.; 
     m = (m + MatrixXd::Constant(rows,cols,min));
 
     return m;
@@ -73,9 +87,9 @@ MatrixXd Fc_Layer::GetBias(){
 };
 
 void Fc_Layer::SetWeights(MatrixXd weights){
-    this->m_weights = weights;
+    m_weights = weights;
 }
 
 void Fc_Layer::SetBias(MatrixXd bias){
-    this->m_bias = bias;
+    m_bias = bias;
 }
