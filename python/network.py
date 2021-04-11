@@ -25,6 +25,7 @@ class Network:
             output = input_data[i]
             for layer in self.layers:
                 output = layer.forward_propagation(output)
+                
             result.append(output)
 
         return result
@@ -42,15 +43,21 @@ class Network:
                 output = x_train[j]
                 for layer in self.layers:
                     output = layer.forward_propagation(output)
+                    print(output)
 
                 # compute loss (for display purpose only)
                 err += self.loss(y_train[j], output)
-
+                print("err",err)
                 # backward propagation
                 error = self.loss_prime(y_train[j], output)
+                #print("error", y_train[j])
+                #print("error", output)
+
                 for layer in reversed(self.layers):
                     error = layer.backward_propagation(error, learning_rate)
 
             # calculate average error on all samples
             err /= samples
             print('epoch %d/%d   error=%f' % (i+1, epochs, err))
+
+        

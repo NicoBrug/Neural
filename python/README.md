@@ -12,6 +12,11 @@ This project aims at building a framework dedicated to the implementation of art
 2. ```sh
    python3 main.py
    ```
+
+1. ```sh
+   g++ main.cpp -o Programme
+   ```
+
 <!-- LICENSE -->
 ## License
 

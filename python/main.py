@@ -12,6 +12,12 @@ y_train = np.array([[[0]], [[1]], [[1]], [[0]]])
 
 V_train = np.array([[[0,0]]])
 
+z_test = np.array([[1],[2],[3],[4]])
+
+x_true = np.array([[1],[2],[3],[4]])
+x_pred = np.array([[1],[2],[6],[3]])
+
+print("mseee", mse_prime(x_true,x_pred))
 # network
 net = Network()
 
@@ -22,8 +28,8 @@ net.add(ActivationLayer(tanh, tanh_prime))
 
 # train
 net.use(mse, mse_prime)
-net.fit(x_train, y_train, epochs=1000, learning_rate=0.1)
+#net.fit(x_train, y_train, epochs=1, learning_rate=0.1)
 
 # test
-out = net.predict(V_train)
+out = net.predict(x_train)
 print(out)
