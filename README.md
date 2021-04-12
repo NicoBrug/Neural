@@ -2,6 +2,7 @@
 
 
 ## ℹ️️ Description
+Neural is a framework dedicated to the realization of machine learning and deep learning algorithms in C++. A development environment is provided with Docker, everything is preinstalled on the image you just have to create your image and start working!
 
 ## 🔧 How to install the development environment
 Ok, first let's start by building the image (the development environment). 
