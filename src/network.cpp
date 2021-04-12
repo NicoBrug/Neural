@@ -11,7 +11,6 @@ using namespace Eigen;
  */
 Network::Network(){
     cout << "no specified network, if you wan't load network, please use constructor Network(string path)" << endl;
-
 };
 
 /** Constructor network with path of exist save network
@@ -145,22 +144,8 @@ bool Network::Save(string name){
     Json::Value vect(Json::arrayValue);
 
     for (int l(0); l< m_layer.size();l++){
-        if (m_layer[l]->AsWeights()){
-            MatrixXd weights = static_cast<Fc_Layer*>(m_layer[l])->GetWeights();
-            MatrixXd bias = static_cast<Fc_Layer*>(m_layer[l])->GetBias();
-            cout << "weights" << weights << endl;
-            cout << "bias" << bias << endl;
-
-            Json::Value json = Serialise(weights,bias);
-            vect.append(json);
-
-        }else{
-            Json::Value result;
-            result["type"] = "ActivationLayer" ;
-            vect.append(result);
-
-        }
-
+        Json::Value json  = static_cast<Fc_Layer*>(m_layer[l])->toJSON();
+        vect.append(json);
     }
     event["Network"] = vect;
 
@@ -184,13 +169,14 @@ void Network::Load(string path){
     file >> root;
 
     const Json::Value net = root["Network"];
-     for ( int i(0); i < net.size(); ++i ){
+    for ( int i(0); i < net.size(); ++i ){
         Json::Value Layer = net[i];
 
         if (Layer["type"] == "ActivationLayer"){
                 Activation_layer* acl = new Activation_layer();
                 this->Add(acl);
         }
+
         if (Layer["type"] == "FcLayer"){                
                 Json::Value weights = Layer["weights"];
                 Json::Value bias = Layer["bias"];
@@ -200,6 +186,7 @@ void Network::Load(string path){
 
                 MatrixXd weights_matrix(input_size,output_size);
                 MatrixXd bias_matrix(1,output_size);
+                cout << "layer" << i << endl;
 
                 for ( int j(0); j < weights.size(); ++j ){
                     Json::Value w = weights[j];
@@ -209,55 +196,16 @@ void Network::Load(string path){
                     }
                 }
                 Json::Value b = bias[0];
-                cout << b.size() << endl;
+                //cout << "weights" << weights_matrix << endl;
+
                 for ( int j(0); j < b.size(); ++j ){
                         double val = stod(b[j].asString()); 
                         bias_matrix(0,j) = val;    
                 }
+                //cout <<  "bias" << bias_matrix << endl;
 
                 Fc_Layer* fcl = new Fc_Layer(weights_matrix,bias_matrix);
                 this->Add(fcl);
         }
     }  
 }
-
-/** Serialise bias and wheight to json
- * 
- *  @param w Matrix of weight we wan't to serialise
- *  @param b Matrix of bias we wan't to serialise
- *  @return Json::Value
- * 
- */
-Json::Value Network::Serialise(MatrixXd w, MatrixXd b)
-{
-    Json::Value result;
-    Json::Value weights(Json::arrayValue);
-    Json::Value bias(Json::arrayValue);
-
-    //Parse weights
-    for (int i(0); i<w.rows();i++){
-        Json::Value rows(Json::arrayValue);
-
-        for (int j(0); j<w.cols();j++){
-            rows.append(Json::Value(w(i,j)));
-        }
-        weights.append(rows);
-
-    }
-
-    //Parse bias
-    for (int i(0); i<b.rows();i++){
-        Json::Value rows(Json::arrayValue);
-
-        for (int j(0); j<b.cols();j++){
-                rows.append(Json::Value(b(i,j)));
-        }
-        bias.append(rows);
-    }
-
-    result["weights"] = weights ; 
-    result["type"] = "FcLayer" ;
-    result["bias"] = bias;
-
-    return result;
-};

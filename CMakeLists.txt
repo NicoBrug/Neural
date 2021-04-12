@@ -17,6 +17,7 @@ add_executable(Neural
     src/activation_layer.cpp
     main.cpp
     
+    header/activation.h
     header/activation_layer.h
     header/fc_layer.h
     header/layer.h

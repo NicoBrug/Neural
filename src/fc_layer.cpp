@@ -58,6 +58,38 @@ MatrixXd Fc_Layer::Backward_propagation(MatrixXd output_error, float learning_ra
     return input_error;
 };
 
+Json::Value Fc_Layer::toJSON(){
+    Json::Value json;
+
+    Json::Value weights(Json::arrayValue);
+    Json::Value bias(Json::arrayValue);
+
+    for (int i(0); i<this->m_weights.rows();i++){
+        Json::Value rows(Json::arrayValue);
+
+        for (int j(0); j<this->m_weights.cols();j++){
+            rows.append(Json::Value(this->m_weights(i,j)));
+        }
+        weights.append(rows);
+
+    }
+
+    for (int i(0); i<this->m_bias.rows();i++){
+        Json::Value rows(Json::arrayValue);
+
+        for (int j(0); j<this->m_bias.cols();j++){
+                rows.append(Json::Value(this->m_bias(i,j)));
+        }
+        bias.append(rows);
+    }
+
+    json["weights"] = weights ; 
+    json["type"] = "FcLayer" ;
+    json["bias"] = bias;
+
+    return json;
+};
+
 /** Create customized random matrix
  * 
  *  @param rows Number of row of Matrix 

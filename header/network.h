@@ -17,8 +17,7 @@ class Network
 {
     public:
         Network();
-        Network(std::string);
-
+        Network(std::string); //for load prexisting network
         ~Network();
 
         void Add(Layer *layer);
@@ -31,8 +30,6 @@ class Network
 
 
     private:
-        Json::Value Serialise(Eigen::MatrixXd x, Eigen::MatrixXd b);
-
         std::vector<Layer*> m_layer;
         std::vector<double> m_error;
         std::ofstream file;
