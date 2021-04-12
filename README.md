@@ -4,19 +4,23 @@
 ## ℹ️️ Description
 Neural is a framework dedicated to the realization of machine learning and deep learning algorithms in C++. A development environment is provided with Docker, everything is preinstalled on the image you just have to create your image and start working!
 
+## Getting Started
+To get a local copy up and running follow these simple steps.
+### Prerequisites
+* Docker
+
 ## 🔧 How to install the development environment
+### Docker
+
 Ok, first let's start by building the image (the development environment). 
 ```
 docker build -t neural .
 ```
-Now we need to create the container. To do this we need to specify that we want to "share" the folder with our container. 
+Now we need to create the container. To do this we need to specify that we want to "share" the folder with our container. (path = The path to the folder where Neural is located )
 ```
-docker run -it -v ~/pathoffolder:/home/Projects/Neural -t neural /bin/bash
+docker run -it -v ~/path/Neural:/home/Projects/Neural -t neural /bin/bash
 ```
-Exemple : if my Foler is in Document/Projects/Neural
-```
-docker run -it -v ~/Documents/Projects/Neural:/home/Projects/Neural -t neural /bin/bash
-```
+### Compilation
 Now we want to compile the project and check that the development environment is ready!
 ```
 mkdir build
@@ -24,6 +28,7 @@ cd build
 cmake ..
 make
 ```
+### Execution
 Everything to compile without problems? Then you can go to the next step, run the XOR example.
 ```
 ./Neural
