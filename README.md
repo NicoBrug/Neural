@@ -28,7 +28,7 @@ Everything to compile without problems? Then you can go to the next step, run th
 ./Neural
 ```
 
-## 🔧 How to use
+## :sunglasses: How to use
 
 Create the network
 ```
