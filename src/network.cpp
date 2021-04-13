@@ -1,10 +1,11 @@
 #include "../header/network.h"
 #include "../header/fc_layer.h"
 
-
 using namespace std;
+using namespace std::chrono;
 using Eigen::MatrixXd;
 using namespace Eigen;
+using namespace sciplot;
 
 /** Constructor network with no argument
  * 
@@ -59,9 +60,7 @@ vector<MatrixXd> Network::Predict(MatrixXd input_data){
 
         res.push_back(output);
         cout << "predict \n" << output << endl; 
-
     };
-
     return res;
 };
 
@@ -78,8 +77,8 @@ void Network::Fit(MatrixXd x_train, MatrixXd y_train, int epochs, double learnin
     int samples = x_train.rows();
     int cols = x_train.cols();
 
-    cout << "samples " << samples << " cols " << cols << endl;
-
+    auto start = high_resolution_clock::now();
+    
     for (int i(0);i<epochs; i++){
         double err(0);
 
@@ -104,6 +103,13 @@ void Network::Fit(MatrixXd x_train, MatrixXd y_train, int epochs, double learnin
         cout << "epoch " << i+1 << " | " << "error " << err/samples << endl;
         m_error.push_back(err/samples); // for plotting
     }
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
+
+    PlotData(epochs,m_error);
+
+    cout << "\nTime taken by fitting: "
+         << duration.count() << " microseconds" << endl;
 }
 
 
@@ -154,7 +160,7 @@ bool Network::Save(string name){
     file.close();
 
     return true;
-}   
+}
 
 /** Load network state for json file, different type of Layer, Weight, Bias, and create Network from data loaded
  * 
@@ -208,4 +214,21 @@ void Network::Load(string path){
                 this->Add(fcl);
         }
     }  
+}
+
+
+void Network::PlotData(int epochs, vector<double> error){
+    Plot plot;
+
+    Vec time = linspace(0.0, epochs, epochs);
+    
+    plot.xlabel("iteration");
+    plot.ylabel("y");
+
+    plot.xrange(0.0, epochs);
+    plot.yrange(0.0, 1);
+
+    plot.drawCurve(time, error).label("error");
+    plot.show();
+    plot.save("error.pdf"); 
 }

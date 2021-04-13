@@ -8,6 +8,9 @@ RUN apt-get update -yq \
 && apt-get install libjsoncpp-dev -y \
 && apt-get install pkg-config -y \
 && apt-get install libeigen3-dev -y \
+&& apt-get install gnuplot -y \
+&& apt-get install -qqy x11-apps -y\
+&& apt install libnvidia-gl-440 \
 && apt-get update -y \
 && apt-get clean
 

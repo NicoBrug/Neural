@@ -5,17 +5,20 @@ project(Neural
     DESCRIPTION "Multilayer Perceptron & Backpropagation"
     LANGUAGES CXX)
 
+
 find_package(PkgConfig REQUIRED)
+find_package(sciplot)
+
 pkg_check_modules(JSONCPP jsoncpp)
 link_libraries(${JSONCPP_LIBRARIES})
-
 
 add_executable(Neural
     src/network.cpp
     src/fc_layer.cpp
     src/layer.cpp
     src/activation_layer.cpp
-    main.cpp
+
+    src/main.cpp
     
     header/activation.h
     header/activation_layer.h
@@ -25,6 +28,8 @@ add_executable(Neural
     )
 
 target_link_libraries(Neural ${JSONCPP_LIBRARIES})
+target_link_libraries(Neural sciplot::sciplot)
+
 
 
 

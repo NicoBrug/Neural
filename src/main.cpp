@@ -1,19 +1,14 @@
 #include <iostream>
 #include <eigen3/Eigen/Dense>
-#include "header/network.h"
-#include "header/fc_layer.h"
-#include "header/activation_layer.h"
-#include "header/activation.h"
+#include "../header/network.h"
+#include "../header/fc_layer.h"
+#include "../header/activation_layer.h"
+#include "../header/activation.h"
 
 using namespace Eigen;
 using Eigen::MatrixXd;
 using namespace std;
 
-// g++ main.cpp src/network.cpp src/fc_layer.cpp src/activation_layer.cpp -I/usr/local/include/ -o Programme
-// apt-get install build-essential
-// apt-get install libjsoncpp-dev
-// apt-get install pkg-config
-// apt-get update
 
 int main() {
 
@@ -57,10 +52,10 @@ int main() {
     net.Add(fcl1);
     net.Add(acl1);
     net.Add(fcl2);
-    net.Add(acl2); 
+    net.Add(acl2);
 
     // Train the network 
-    net.Fit(x_data,x_train,1000,0.1);
+    net.Fit(x_data,x_train,500,0.1);
 
     //Call predict test
     net.Predict(x_test);

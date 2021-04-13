@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string> 
 #include <eigen3/Eigen/Dense>
+#include <eigen3/Eigen/Jacobi>
 
 class Activation {
     public:
@@ -44,5 +45,18 @@ class Sigmoid : public Activation {
         }
 };
 
+class Softmax : public Activation {
+    public:
+        Softmax() {
+            m_type= "Softmax";
+        };
+        virtual Eigen::MatrixXd Acti(Eigen::MatrixXd x){
+            Eigen::MatrixXd expo = exp(x.array());
+            return expo/expo.sum();
+        }
+        virtual Eigen::MatrixXd Acti_prime(Eigen::MatrixXd x){
+            return  x;
+        }
+};
 
 #endif

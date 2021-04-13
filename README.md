@@ -8,19 +8,26 @@ Neural is a framework dedicated to the realization of machine learning and deep 
 To get a local copy up and running follow these simple steps.
 ### Prerequisites
 * Docker
-
+```
+git clone https://github.com/NicoBrug/Neural.git
+```
 ## 🔧 How to install the development environment
-### Docker
-
 Ok, first let's start by building the image (the development environment). 
 ```
+xhost local:root
 docker build -t neural .
 ```
 Now we need to create the container. To do this we need to specify that we want to "share" the folder with our container. (path = The path to the folder where Neural is located )
 ```
-docker run -it -v ~/path/Neural:/home/Projects/Neural -t neural /bin/bash
+sudo docker run \
+    -it \
+    --net=host \
+    --privileged \
+    -e DISPLAY=unix$DISPLAY \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v ~/Documents/neuralnetworks/Neural:/home/Projects/Neural \
+    -t neural /bin/bash
 ```
-### Compilation
 Now we want to compile the project and check that the development environment is ready!
 ```
 mkdir build
@@ -28,7 +35,6 @@ cd build
 cmake ..
 make
 ```
-### Execution
 Everything to compile without problems? Then you can go to the next step, run the XOR example.
 ```
 ./Neural
