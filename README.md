@@ -1,7 +1,7 @@
 
 ![Screenshot](pics/logo.png?raw=true )
-## ℹ️️ Description
-Neural is a library dedicated to the realization of machine learning and deep learning algorithms in C++. A development environment is provided with Docker, everything is preinstalled on the image you just have to create your image and start working!
+## Description
+Neural is a library developed in C++ allowing the realization of artificial neural networks. It is intended to be simple to use and easy to install (Just create the Docker and start to code!). If you encounter any problem, don't hesitate to let me know. 
 
 ## Getting Started
 To get a local copy up and running follow these simple steps.
@@ -10,7 +10,7 @@ To get a local copy up and running follow these simple steps.
 ```
 git clone https://github.com/NicoBrug/Neural.git
 ```
-## 🔧 How to install the development environment
+## How to install the development environment
 Ok, first let's start by building the image (the development environment). 
 ```
 xhost local:root
@@ -39,7 +39,7 @@ Everything to compile without problems? Then you can go to the next step, run th
 ./Neural
 ```
 
-## :sunglasses: How to use
+## How to use
 
 Create the network
 ```
