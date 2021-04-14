@@ -11,7 +11,8 @@
 #include <jsoncpp/json/json.h>
 #include <jsoncpp/json/writer.h>
 #include <sciplot/sciplot.hpp>
-
+#include <omp.h>
+#include <thread>
 #include "layer.h"
 #include "fc_layer.h"
 #include "activation_layer.h"
@@ -30,6 +31,9 @@ class Network
         std::vector<Eigen::MatrixXd> Predict(Eigen::MatrixXd input_data);
         bool Save(std::string);
         void Load(std::string);
+        void SetThreads(int thread);
+        int GetThreads();
+
 
     private:
         Loss* m_loss; 

@@ -10,6 +10,7 @@ using Eigen::MatrixXd;
 using namespace std;
 
 int main() {
+    
     MatrixXd x_data(4,2);
     x_data << 
             0,0,

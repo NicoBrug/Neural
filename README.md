@@ -49,11 +49,21 @@ or if we already save a Neural network :
 ```
 Network net("../net.json"); 
 ```
+Do you want to assign a number of threads to optimize the operation? 
+```
+net.SetThread(5); 
+```
+If you don't know how much core your pc has -> 
+```
+cout << "my cores : " << net.GetThreads << endl;
+```
 Instantiate the different activation function :
 ```
 Activation* than = new Than();
 Activation* sigmoid = new Sigmoid();
 Activation* relu = new Relu();
+Activation* softplus = new SoftPlus();
+
 ```
 Instantiate the loss function & use it in Network
 ```

@@ -218,3 +218,12 @@ void Network::PlotData(int epochs, vector<double> error){
     plot.show();
     plot.save("error.pdf"); 
 }
+
+void Network::SetThreads(int n){
+    omp_set_num_threads(n);
+    Eigen::setNbThreads(n);
+}
+
+int Network::GetThreads(){
+    return std::thread::hardware_concurrency();
+}
