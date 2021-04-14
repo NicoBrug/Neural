@@ -12,6 +12,9 @@ find_package(sciplot)
 pkg_check_modules(JSONCPP jsoncpp)
 link_libraries(${JSONCPP_LIBRARIES})
 
+include_directories(lib/EigenRand-0.3.3)
+link_directories(lib/EigenRand-0.3.3)
+
 add_executable(Neural
     src/network.cpp
     src/fc_layer.cpp

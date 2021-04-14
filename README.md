@@ -53,6 +53,13 @@ Instantiate the different activation function :
 ```
 Activation* than = new Than();
 Activation* sigmoid = new Sigmoid();
+Activation* relu = new Relu();
+```
+Instantiate the loss function & use it in Network
+```
+Loss* mse = new Mse();
+Loss* cre = new Cross_entropy();
+net.Use(mse);
 ```
 Instantiate the different Layer : Fc_Layer = full connected neuron
 ```
@@ -61,8 +68,8 @@ Activation_layer* acl1 = new Activation_layer(than);
 ```
 Add the different layer to Network :
 ```
-Fc_Layer* fcl1 = new Fc_Layer(2,5);
-Activation_layer* acl1 = new Activation_layer(than);
+net.Add(fcl1);
+net.Add(acl1);
 ```
 Train the network : 
 ```
@@ -76,6 +83,11 @@ Save :
 ```
 net.Save("My_Amazing_Weights");
 ```
+Plot:
+```
+net.Plot("loss");
+```
+
 
 <!-- LICENSE -->
 ## License

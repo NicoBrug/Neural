@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <eigen3/Eigen/Dense>
+#include <EigenRand/EigenRand>
 #include "layer.h"
 
 class Fc_Layer : public Layer

@@ -40,6 +40,16 @@ void Network::Add(Layer *layer){
     m_layer.push_back(layer);
 };
 
+/** Adding a loss function to network
+ * 
+ *  @param loss The pointer of the loss function
+ *  @return void
+ * 
+ */
+void Network::Use(Loss *l){
+    m_loss = l;
+};
+
 /** Predict data based on input data, forward propagation throughout the network 
  * 
  *  @param input_data Matrix Input data
@@ -92,15 +102,15 @@ void Network::Fit(MatrixXd x_train, MatrixXd y_train, int epochs, double learnin
                 output = m_layer[l]->Forward_propagation(output);
             } 
 
-            err += this->Mse(y_train.row(j),output);
-            MatrixXd error = this->Mse_prime(y_train.row(j),output);
+            err += this->m_loss->Compute(y_train.row(j), output);
+            MatrixXd error = this->m_loss->Compute_prime(y_train.row(j),output);
 
             for (int k(m_layer.size()-1); k>=0; k--){
                 error = m_layer[k]->Backward_propagation(error,learning_rate);
             }   
         }
 
-        cout << "epoch " << i+1 << " | " << "error " << err/samples << endl;
+        //cout << "epoch " << i+1 << " | " << "error " << err/samples << endl;
         m_error.push_back(err/samples); // for plotting
     }
     auto stop = high_resolution_clock::now();
@@ -112,30 +122,6 @@ void Network::Fit(MatrixXd x_train, MatrixXd y_train, int epochs, double learnin
          << duration.count() << " microseconds" << endl;
 }
 
-
-/** Mean Squared Error function, use to calculate the error between 2 data Matrix
- * 
- *  @param y_true Matrix Input data
- *  @param y_pred Matrix Result data
- *  @return double : error
- * 
- */
-double Network::Mse(MatrixXd y_true, MatrixXd y_pred){
-    MatrixXd diff = y_true-y_pred;
-    return diff.array().pow(2).mean();
-}
-
-/** Derivative Mean Squared Error function, use to calculate the derivate of error between 2 data Matrix, use for retropropagation
- * 
- *  @param y_true Matrix Input data
- *  @param y_pred Matrix Pred data
- *  @return MatrixXd 
- * 
- */
-MatrixXd Network::Mse_prime(MatrixXd y_true, MatrixXd y_pred){
-    MatrixXd diff = y_pred-y_true;  
-    return 2*diff/y_true.size();
-}
 
 /** Save network state in json file
  * 

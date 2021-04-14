@@ -55,6 +55,29 @@ class Softmax : public Activation {
             return expo/expo.sum();
         }
         virtual Eigen::MatrixXd Acti_prime(Eigen::MatrixXd x){
+            return  x; // Not implemented
+        }
+};
+
+class Relu : public Activation {
+    public:
+        Relu() {
+            m_type= "Relu";
+        };
+        virtual Eigen::MatrixXd Acti(Eigen::MatrixXd x){
+            return x.cwiseMax(0.0);
+        }
+        virtual Eigen::MatrixXd Acti_prime(Eigen::MatrixXd x){
+            for (int r(0); r<x.rows();r++){
+                for (int c(0); c<x.cols();c++){
+                    if (x(r,c)<0){
+                        x(r,c) = 0;
+                    }
+                    else{
+                        x(r,c) = 1;
+                    }
+                }
+            }
             return  x;
         }
 };

@@ -14,6 +14,8 @@ Fc_Layer::Fc_Layer(int input_size, int output_size){
     this->m_as_weight = true;
     this->m_weights = RandomMatrix(input_size,output_size,-0.5,0.5);
     this->m_bias = RandomMatrix(1,output_size,-0.5,0.5);
+
+    cout << "weights" << m_weights << endl;
 };
 
 /** Constructor of the Full connected Layer, Fill Weight & Bias with preexistant Matrix 
@@ -100,13 +102,21 @@ Json::Value Fc_Layer::toJSON(){
  * 
  */
 MatrixXd Fc_Layer::RandomMatrix(int rows, int cols, float min, float max){
-    double range= max-min;
+    /* double range= max-min;
     
     MatrixXd m = MatrixXd::Random(rows,cols); 
     m = (m + MatrixXd::Constant(rows,cols,1.))*range/2.; 
     m = (m + MatrixXd::Constant(rows,cols,min));
+    
+    */
+    Rand::Vmt19937_64 urng{ 42 };
+    MatrixXd mat{ rows, cols };
 
-    return m;
+    Rand::balancedLike(mat, urng);
+ 
+    mat = Rand::balancedLike(mat, urng);
+
+    return mat;
 };
 
 

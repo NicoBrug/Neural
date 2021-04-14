@@ -13,7 +13,6 @@ class Layer
         virtual Eigen::MatrixXd Forward_propagation(Eigen::MatrixXd input) = 0;
         virtual Eigen::MatrixXd Backward_propagation(Eigen::MatrixXd output_error, float learning_rate) = 0;
         virtual Json::Value toJSON() = 0;
-        
         bool AsWeights();
 
     protected:
