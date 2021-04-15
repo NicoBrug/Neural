@@ -5,8 +5,9 @@
 #include "../header/activation_layer.h"
 #include "../header/activation.h"
 #include "../header/loss.h"
+#include "../header/kernel.h"
 #include <EigenRand/EigenRand>
-
+#include <eigen3/Eigen/Core>
 
 using namespace Eigen;
 using Eigen::MatrixXd;
@@ -18,10 +19,15 @@ int main() {
     //const auto processor_count = std::thread::hardware_concurrency();
     //cout << "core" << processor_count <<endl;
 
+    std::vector<Eigen::Vector3d> v1(1000, Eigen::Vector3d{ 1.0, 10.0, 1111.0 });
+    std::vector<Eigen::Vector3d> v2(1000, Eigen::Vector3d{ -1.0, 1.0, 1.0 });
 
+    double x = Kernel::dot(v1,v2);
+    cout << "GPU" << x << endl; 
+    
     MatrixXd x_data(4,2);
     x_data << 
-            0,0,
+            9,2,
             0,1,
             1,0,
             1,1;
@@ -39,10 +45,17 @@ int main() {
             0,0, // -> 0
             1,0; // -> 1
 
-    
-    Network net;
-    cout << "totalcore" << net.GetThreads() << endl;
-    net.SetThreads(5);
+    ArrayXXd e = x_data.array();
+
+    ArrayXXd* m1;
+
+    cout << x_data << endl;
+
+    cout << e << endl;
+
+    cout << e(2) << endl;
+
+    /* Network net;
 
     Loss* mse = new Mse();
     Loss* cre = new Cross_entropy();
@@ -54,9 +67,9 @@ int main() {
     Activation* leakyrelu = new LeakyRelu(0.2);
 
     Layer* fcl1 = new Fc_Layer(2,5);
-    Layer* acl1 = new Activation_layer(leakyrelu);
+    Layer* acl1 = new Activation_layer(than);
     Layer* fcl2 = new Fc_Layer(5,1);
-    Layer* acl2 = new Activation_layer(leakyrelu);
+    Layer* acl2 = new Activation_layer(than);
 
     net.Use(mse);
 
@@ -67,7 +80,7 @@ int main() {
 
     net.Fit(x_data,x_train,500,0.1);
 
-    net.Predict(x_test);
+    net.Predict(x_test); */
     cout << "nbthread" << Eigen::nbThreads( ) <<endl;
     return 0;
 }

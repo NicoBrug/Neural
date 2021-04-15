@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM nvidia/cuda:11.0-base
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -10,8 +10,12 @@ RUN apt-get update -yq \
 && apt-get install libeigen3-dev -y \
 && apt-get install gnuplot -y \
 && apt-get install -qqy x11-apps -y\
-&& apt install libnvidia-gl-440 \
+&& apt-get install nvidia-cuda-dev -y \
+&& apt-get install nvidia-cuda-toolkit -y\
 && apt-get update -y \
 && apt-get clean
+
+
+
 
 WORKDIR /home/Projects/Neural 

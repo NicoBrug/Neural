@@ -14,18 +14,19 @@ git clone https://github.com/NicoBrug/Neural.git
 Ok, first let's start by building the image (the development environment). 
 ```
 xhost local:root
-docker build -t neural .
+docker build -t neural-cuda .
 ```
 Now we need to create the container. To do this we need to specify that we want to "share" the folder with our container. (path = The path to the folder where Neural is located )
 ```
 sudo docker run \
     -it \
+    --runtime=nvidia \
     --net=host \
     --privileged \
     -e DISPLAY=unix$DISPLAY \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v ~/Documents/neuralnetworks/Neural:/home/Projects/Neural \
-    -t neural /bin/bash
+    -t neural-cuda /bin/bash
 ```
 Now we want to compile the project and check that the development environment is ready!
 ```
@@ -55,7 +56,7 @@ net.SetThread(5);
 ```
 If you don't know how much core your pc has -> 
 ```
-cout << "my cores : " << net.GetThreads << endl;
+cout << "my cores: " << net.GetThreads << endl;
 ```
 Instantiate the different activation function :
 ```
@@ -63,7 +64,6 @@ Activation* than = new Than();
 Activation* sigmoid = new Sigmoid();
 Activation* relu = new Relu();
 Activation* softplus = new SoftPlus();
-
 ```
 Instantiate the loss function & use it in Network
 ```
