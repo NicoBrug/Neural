@@ -7,6 +7,7 @@ Neural is a library developed in C++ allowing the realization of artificial neur
 To get a local copy up and running follow these simple steps.
 ### Prerequisites
 * Docker
+* nvidia-docker2
 ```
 git clone https://github.com/NicoBrug/Neural.git
 ```

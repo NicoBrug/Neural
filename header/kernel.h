@@ -8,7 +8,7 @@
 namespace Kernel
 {
     double dot(const std::vector<Eigen::Vector3d> & v1, const std::vector<Eigen::Vector3d> & v2);
-    Eigen::MatrixXd dotMatrix(const Eigen::ArrayXXd & m1, const Eigen::ArrayXXd  & m2);
+    double * dot(const double *m1, const double *m2, int N);
 
 }
 
