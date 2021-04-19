@@ -1,4 +1,6 @@
-#include "../header/fc_layer.h"
+#include "../includes/fc_layer.h"
+#include "../includes/core.h"
+#include "../includes/kernel.h"
 
 using namespace std;
 using Eigen::MatrixXd;
@@ -12,10 +14,9 @@ using namespace Eigen;
  */
 Fc_Layer::Fc_Layer(int input_size, int output_size){
     this->m_as_weight = true;
-    this->m_weights = RandomMatrix(input_size,output_size,-0.5,0.5);
-    this->m_bias = RandomMatrix(1,output_size,-0.5,0.5);
+    this->m_weights = Core::RandomMatrix(input_size,output_size,-0.5,0.5);
+    this->m_bias = Core::RandomMatrix(1,output_size,-0.5,0.5);
 
-    cout << "weights" << m_weights << endl;
 };
 
 /** Constructor of the Full connected Layer, Fill Weight & Bias with preexistant Matrix 
@@ -91,34 +92,6 @@ Json::Value Fc_Layer::toJSON(){
 
     return json;
 };
-
-/** Create customized random matrix
- * 
- *  @param rows Number of row of Matrix 
- *  @param cols Number of column of Matrix 
- *  @param min Min value for random generation
- *  @param max Max value for random generation
- *  @return Random of n row et p col of value between min and max;
- * 
- */
-MatrixXd Fc_Layer::RandomMatrix(int rows, int cols, float min, float max){
-    /* double range= max-min;
-    
-    MatrixXd m = MatrixXd::Random(rows,cols); 
-    m = (m + MatrixXd::Constant(rows,cols,1.))*range/2.; 
-    m = (m + MatrixXd::Constant(rows,cols,min));
-    
-    */
-    Rand::Vmt19937_64 urng{ 42 };
-    MatrixXd mat{ rows, cols };
-
-    Rand::balancedLike(mat, urng);
- 
-    mat = Rand::balancedLike(mat, urng);
-
-    return mat;
-};
-
 
 MatrixXd Fc_Layer::GetWeights(){
     return this->m_weights;

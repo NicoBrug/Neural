@@ -32,13 +32,19 @@ add_library(Neural STATIC
     src/layer.cpp
     src/activation_layer.cpp
     src/kernel.cu
-    
-    header/activation.h
-    header/activation_layer.h
-    header/fc_layer.h
-    header/layer.h
-    header/network.h
-    header/kernel.h
+    src/core.cpp
+
+    src/loader/mnist.cpp
+
+    includes/activation.h
+    includes/activation_layer.h
+    includes/fc_layer.h
+    includes/layer.h
+    includes/network.h
+    includes/kernel.h
+    includes/core.h
+    includes/loader/mnist.h
+
   )
 
 

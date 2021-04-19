@@ -1,5 +1,5 @@
-#include "../header/network.h"
-#include "../header/fc_layer.h"
+#include "../includes/network.h"
+#include "../includes/fc_layer.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -101,25 +101,24 @@ void Network::Fit(MatrixXd x_train, MatrixXd y_train, int epochs, double learnin
             for (int l(0);l<m_layer.size();l++){
                 output = m_layer[l]->Forward_propagation(output);
             } 
-
             err += this->m_loss->Compute(y_train.row(j), output);
             MatrixXd error = this->m_loss->Compute_prime(y_train.row(j),output);
-
+ 
             for (int k(m_layer.size()-1); k>=0; k--){
                 error = m_layer[k]->Backward_propagation(error,learning_rate);
-            }   
+            }    
         }
 
-        //cout << "epoch " << i+1 << " | " << "error " << err/samples << endl;
+        cout << "epoch " << i+1 << " | " << "error " << err/samples << endl;
         m_error.push_back(err/samples); // for plotting
     }
     auto stop = high_resolution_clock::now();
-    auto duration = duration_cast<microseconds>(stop - start);
+    auto duration = duration_cast<microseconds>(stop - start); 
 
     PlotData(epochs,m_error);
 
-    cout << "\nTime taken by fitting: "
-         << duration.count() << " microseconds" << endl;
+ /*    cout << "\nTime taken by fitting: "
+         << duration.count() << " microseconds" << endl; */
 }
 
 

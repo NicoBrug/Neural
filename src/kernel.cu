@@ -1,5 +1,5 @@
 
-#include "../header/kernel.h"
+#include "../includes/kernel.h"
 #include <eigen3/Eigen/Core>
 
 #include <iostream>
@@ -65,58 +65,57 @@ namespace Kernel
     }
 
     /*-------------------- dot product matrix ---------------------*/
-    __global__ void cu_dot(const double *m1, const double *m2, double *out, int N)
+    __global__ void cu_dot(const double *m1, const double *m2, double *out, int M, int N, int K)
     {
         int ROW = blockIdx.y*blockDim.y+threadIdx.y;
         int COL = blockIdx.x*blockDim.x+threadIdx.x;      
-
         double tmpSum = 0;
-        if (ROW < N && COL < N) {
-            // each thread computes one element of the block sub-matrix
+
+        if (ROW < M && COL < K) {
             for (int i = 0; i < N; i++) {
-                tmpSum += m1[ROW * N + i] * m2[i * N + COL];
+                tmpSum += m1[ROW * N + i] * m2[i * K + COL];
             }
         }
-
-        out[ROW * N + COL] = tmpSum;
+        out[ROW * K + COL] = tmpSum;
 
         return;
     }
     
-    // The wrapper for the calling of the actual kernel
-    double * dot(const double *m1, const double *m2, int N)
+    double * dot(const double *m1, const double *m2, int m, int n, int k)
     {        
-        printf("Hello from blockd\n", N);
 
-        size_t array_size = (N*N)*sizeof(double);
+        size_t array_sizem1 = (m*n)*sizeof(double);
+        size_t array_sizem2 = (n*k)*sizeof(double);
 
-        dim3 dimBlock(N,N);
-        dim3 dimGrid(1,1);
+        const int blkdim = 16;
+        dim3 dimBlock(blkdim,blkdim);
+        dim3 dimGrid((k+dimBlock.x-1)/dimBlock.x, (m+dimBlock.y-1)/dimBlock.y);
 
-        double *ret = new double[N*N];
+        double *ret = new double[m*k];
+        size_t array_sizeret = (m*k)*sizeof(double);
 
         //Instantiate
         double *dev_m1, *dev_m2;
 
         //Alloc on GPU 
-        HANDLE_ERROR(cudaMalloc((void **)&dev_m1, array_size));
-        HANDLE_ERROR(cudaMalloc((void **)&dev_m2, array_size));
+        HANDLE_ERROR(cudaMalloc((void **)&dev_m1, array_sizem1));
+        HANDLE_ERROR(cudaMalloc((void **)&dev_m2, array_sizem2));
         
         //Instantiate
-        double* dev_ret = new double[N*N];
+        double* dev_ret = new double[m*k];
 
         //Alloc on GPU
-        HANDLE_ERROR(cudaMalloc((void **)&dev_ret, array_size));
+        HANDLE_ERROR(cudaMalloc((void **)&dev_ret, array_sizeret));
 
         // Copy to device
-        HANDLE_ERROR(cudaMemcpy(dev_m1, m1, array_size, cudaMemcpyHostToDevice));
-        HANDLE_ERROR(cudaMemcpy(dev_m2, m2, array_size, cudaMemcpyHostToDevice));
+        HANDLE_ERROR(cudaMemcpy(dev_m1, m1, array_sizem1, cudaMemcpyHostToDevice));
+        HANDLE_ERROR(cudaMemcpy(dev_m2, m2, array_sizem2, cudaMemcpyHostToDevice));
     
         // Dot product
-        cu_dot<<<dimGrid, dimBlock>>>(dev_m1, dev_m2, dev_ret, N);
+        cu_dot<<<dimGrid, dimBlock>>>(dev_m1, dev_m2, dev_ret, m, n, k);
 
         // Copy to host
-        HANDLE_ERROR(cudaMemcpy(ret, dev_ret, array_size, cudaMemcpyDeviceToHost));
+        HANDLE_ERROR(cudaMemcpy(ret, dev_ret, array_sizeret, cudaMemcpyDeviceToHost));
 
         cudaFree(dev_m1);
         cudaFree(dev_m2);
