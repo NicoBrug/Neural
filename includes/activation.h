@@ -41,7 +41,7 @@ class Sigmoid : public Activation {
             return 1/(1+exp(-x.array()));
         }
         virtual Eigen::MatrixXd Acti_prime(Eigen::MatrixXd x){
-            return  1 / (1 + exp(-x.array())) * (1 - (1 / (1 + exp(-x.array()))));
+            return  (1 / (1 + exp(-x.array()))) * (1 - (1 / (1 + exp(-x.array()))));
         }
 };
 
@@ -51,11 +51,12 @@ class Softmax : public Activation {
             m_type= "Softmax";
         };
         virtual Eigen::MatrixXd Acti(Eigen::MatrixXd x){
-            Eigen::MatrixXd expo = exp(x.array());
+            Eigen::MatrixXd expo = exp(x.array()-x.maxCoeff());
             return expo/expo.sum();
         }
         virtual Eigen::MatrixXd Acti_prime(Eigen::MatrixXd x){
-            return  x; // Not implemented
+            Eigen::MatrixXd exposum = (exp(x.array()-x.maxCoeff()))/(exp(x.array()-x.maxCoeff()).sum());
+            return exposum.array()*(1-exposum.array()); 
         }
 };
 

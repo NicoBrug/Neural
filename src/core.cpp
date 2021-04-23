@@ -20,6 +20,13 @@ MatrixXd Core::RandomMatrix(int rows, int cols, float min, float max){
  
     m = Rand::balancedLike(m, urng);
 
-    //MatrixXd M = Map<Matrix<double,Dynamic,Dynamic,RowMajor> >(m.data(), rows, cols);
-    return m;
+    MatrixXd M = Map<Matrix<double,Dynamic,Dynamic,RowMajor> >(m.data(), rows, cols);
+    return M;
 };
+
+void Core::PrintArray(double *array){
+    for (int i = 0; i <= sizeof(array); i++) {
+        cout << array[i] << "  ";
+    }
+    cout << "\n" << endl;
+}

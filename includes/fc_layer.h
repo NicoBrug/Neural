@@ -6,6 +6,7 @@
 #include <eigen3/Eigen/Dense>
 #include <EigenRand/EigenRand>
 #include "layer.h"
+#include <chrono>
 
 class Fc_Layer : public Layer
 {

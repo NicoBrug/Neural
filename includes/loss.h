@@ -25,7 +25,7 @@ class Mse : public Loss {
         }
         virtual Eigen::MatrixXd  Compute_prime(Eigen::MatrixXd y_true, Eigen::MatrixXd y_pred){
             Eigen::MatrixXd diff = y_pred-y_true;  
-            return 2*diff/y_true.size();
+            return (2*diff)/y_true.size();
         }
 };
 
@@ -34,12 +34,15 @@ class Cross_entropy : public Loss {
     public:
         Cross_entropy() {};
         virtual double Compute(Eigen::MatrixXd y_true, Eigen::MatrixXd y_pred){
-            Eigen::MatrixXd diff = y_true-y_pred; // Not implemented
-            return 0.0;
+            double res;
+            for (int i(0);i<y_true.cols();i++){
+                res+= y_true(0,i)*log(y_pred(0,i));
+            }
+            return -res;
         }
         virtual Eigen::MatrixXd  Compute_prime(Eigen::MatrixXd y_true, Eigen::MatrixXd y_pred){
-            Eigen::MatrixXd diff = y_pred-y_true;  // Not implemented
-            return diff;
+            //Eigen::MatrixXd res = (-(y_true/y_pred)+((1-y_true)/(1-y_pred)))/y_true.size();
+            return y_true;
         }
 };
 

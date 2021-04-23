@@ -11,7 +11,7 @@ class Core {
     public:
         Core() {};
         static Eigen::MatrixXd RandomMatrix(int rows, int cols, float min, float max);
-
+        static void PrintArray(double *array);
     protected:
 
 };

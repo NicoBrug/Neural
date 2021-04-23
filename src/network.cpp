@@ -1,11 +1,15 @@
 #include "../includes/network.h"
 #include "../includes/fc_layer.h"
+#include "../includes/core.h"
+
 
 using namespace std;
 using namespace std::chrono;
 using Eigen::MatrixXd;
 using namespace Eigen;
 using namespace sciplot;
+
+typedef Matrix<double,Dynamic,Dynamic,RowMajor> RowMajMat; 
 
 /** Constructor network with no argument
  * 
@@ -69,7 +73,10 @@ vector<MatrixXd> Network::Predict(MatrixXd input_data){
         }
 
         res.push_back(output);
-        cout << "predict \n" << output << endl; 
+
+        MatrixXf::Index maxRow, maxCol;
+        float max = output.maxCoeff(&maxRow, &maxCol);
+        cout << "predict \n" << output << " | result : " << maxCol << " | max " << max << endl; 
     };
     return res;
 };
@@ -83,7 +90,7 @@ vector<MatrixXd> Network::Predict(MatrixXd input_data){
  *  @return void
  * 
  */
-void Network::Fit(MatrixXd x_train, MatrixXd y_train, int epochs, double learning_rate){
+void Network::Fit(MatrixXd x_train, MatrixXd y_train, int epochs, double learning_rate, int batch_size){
     int samples = x_train.rows();
     int cols = x_train.cols();
 
@@ -91,34 +98,42 @@ void Network::Fit(MatrixXd x_train, MatrixXd y_train, int epochs, double learnin
     
     for (int i(0);i<epochs; i++){
         double err(0);
-
+        auto t_start = std::chrono::high_resolution_clock::now();
+        
         for (int j(0); j<samples; j++){
             
-            MatrixXd output(1,cols);
-            output = x_train.row(j);
             
-
+            RowMajMat output(1,cols);
+            output.row(0) = x_train.row(j);
+            
             for (int l(0);l<m_layer.size();l++){
                 output = m_layer[l]->Forward_propagation(output);
             } 
+
             err += this->m_loss->Compute(y_train.row(j), output);
+
             MatrixXd error = this->m_loss->Compute_prime(y_train.row(j),output);
- 
+            
             for (int k(m_layer.size()-1); k>=0; k--){
                 error = m_layer[k]->Backward_propagation(error,learning_rate);
-            }    
-        }
+            } 
 
-        cout << "epoch " << i+1 << " | " << "error " << err/samples << endl;
-        m_error.push_back(err/samples); // for plotting
+            int percent = (j*100)/samples;
+            cout << "\r" << "epoch : " << i+1 << "/" << epochs << " " << percent+1 << "%" << " | samples : " << j+1 << " | " << " loss " << err/samples ;
+
+        }
+        auto t_end = std::chrono::high_resolution_clock::now();
+        double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end-t_start).count();
+
+        cout << " | " << " ops time " << elapsed_time_ms << endl;
+        m_error.push_back(err/samples); 
     }
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(stop - start); 
 
     PlotData(epochs,m_error);
 
- /*    cout << "\nTime taken by fitting: "
-         << duration.count() << " microseconds" << endl; */
+    cout << "\nTime taken by fitting: " << duration.count() << " microseconds" << endl; 
 }
 
 
@@ -207,15 +222,14 @@ void Network::PlotData(int epochs, vector<double> error){
 
     Vec time = linspace(0.0, epochs, epochs);
     
-    plot.xlabel("iteration");
-    plot.ylabel("y");
+    plot.xlabel("Epochs");
+    plot.ylabel("Error");
 
     plot.xrange(0.0, epochs);
     plot.yrange(0.0, 1);
 
-    plot.drawCurve(time, error).label("error");
+    plot.drawCurve(time, error).label("loss");
     plot.show();
-    plot.save("error.pdf"); 
 }
 
 void Network::SetThreads(int n){

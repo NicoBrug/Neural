@@ -33,6 +33,10 @@ int main() {
 
     Network net;
 
+    Loss* mse = new Mse(); 
+    Loss* cre = new Cross_entropy(); 
+    net.Use(mse);
+    
     Activation* than = new Than();
 
     Fc_Layer* fcl1 = new Fc_Layer(2,5);

@@ -49,11 +49,21 @@ MatrixXd Fc_Layer::Forward_propagation(MatrixXd input_data){
  *  @param output_error The inputs of the Layer = The outputs of the previous Layer, or The data of the first Layer 
  *  @param learning_rate The step size at each iteration
  *  @return Matrix of input Layer error 
- * 
+ *  /!\ -> Matrix stored row or col 
  */
 MatrixXd Fc_Layer::Backward_propagation(MatrixXd output_error, float learning_rate){
-    MatrixXd input_error = output_error * m_weights.transpose();
+
+
+    //GPU
+    double* input_error_array = Kernel::dot(output_error.data(), m_weights.transpose().data(),output_error.rows(),output_error.cols(),m_weights.rows()); 
+    //double* weights_error_array = Kernel::dot(m_input.transpose().data(), output_error.data(),m_input.cols(),m_input.rows(),output_error.cols()); 
+    
+    //CPU
+    //MatrixXd input_error = output_error*m_weights.transpose();
     MatrixXd weights_error = m_input.transpose()*output_error;
+
+    MatrixXd input_error = Map<Matrix<double,Dynamic,Dynamic> >(input_error_array,output_error.rows(),m_weights.rows());
+    //MatrixXd weights_error = Map<Matrix<double,Dynamic,Dynamic,RowMajor> >(weights_error_array,m_input.cols(),output_error.cols());
 
     this->m_weights -= learning_rate * weights_error;
     this->m_bias -= learning_rate * output_error;

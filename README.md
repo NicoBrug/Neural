@@ -99,6 +99,11 @@ Plot:
 net.Plot("loss");
 ```
 
+## Exemple
+### MNIST
+Use of the stochastic gradient descent method with the mean square error calculation function.
+Loss 
+![Screenshot](pics/mnistloss.png?raw=true )
 
 <!-- LICENSE -->
 ## License

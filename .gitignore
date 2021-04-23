@@ -1,4 +1,5 @@
 build/
 lib/
+test/
 cmake-3.20.1-linux-x86_64.sh
 profile
