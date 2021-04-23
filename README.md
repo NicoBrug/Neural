@@ -105,6 +105,24 @@ Use of the stochastic gradient descent method with the mean square error calcula
 Loss 
 ![Screenshot](pics/mnistloss.png?raw=true )
 
+## Roadmap
+- [x] Dev env : Docker + Cmake
+- Activation function
+    - [x] Tanh 
+    - [x] Sigmoid
+    - [x] Relu
+    - [x] LeakyRelu
+    - [ ] Softmax (in dev)
+- Loss function
+    - [x] MSE 
+    - [ ] CRE
+- Layer 
+    - [x] Full connected
+    - [ ] Flatten
+    - [ ] Conv (in dev)
+- CudaSupport 
+    - [x] Matrix multiplication
+    
 <!-- LICENSE -->
 ## License
 
