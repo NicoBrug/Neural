@@ -1,5 +1,5 @@
 
-#include "../includes/layer.h"
+#include "../../includes/layers/layer.h"
 
 /** Checks if the current layer has weights
  * 

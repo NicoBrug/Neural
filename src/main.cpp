@@ -2,15 +2,15 @@
 #include <eigen3/Eigen/Dense>
 #include <chrono>
 #include "../includes/network.h"
-#include "../includes/fc_layer.h"
-#include "../includes/activation_layer.h"
-#include "../includes/flatten_layer.h"
+#include "../includes/layers/fc_layer.h"
+#include "../includes/layers/activation_layer.h"
+#include "../includes/layers/flatten_layer.h"
+#include "../includes/layers/conv_layer.h"
 #include "../includes/activation.h"
 #include "../includes/loss.h"
 #include "../includes/kernel.h"
 #include "../includes/core.h"
 #include "../includes/loader/mnist.h"
-#include "../includes/conv_layer.h"
 
 #include <EigenRand/EigenRand>
 #include <eigen3/Eigen/Core>
@@ -80,7 +80,7 @@ int main() {
     }
 
     std::tuple<int, int, int> dimensions1 = std::make_tuple(28,28,1);
-    std::tuple<int, int, int> filter1 = std::make_tuple(3,3,1);
+    std::tuple<int, int, int> filter1 = std::make_tuple(3,3,2);
 
     std::tuple<int, int, int> dimensions2 = std::make_tuple(8,8,1);
     std::tuple<int, int, int> filter2 = std::make_tuple(3,3,1);
@@ -96,7 +96,7 @@ int main() {
     Conv_layer* c1 = new Conv_layer(dimensions1,filter1,1,1);
     Activation_layer* acl1 = new Activation_layer(than);
     Flatten_layer* fl = new Flatten_layer();
-    Fc_Layer* fc1 = new Fc_Layer(784,100);
+    Fc_Layer* fc1 = new Fc_Layer(784*2,100);
     Activation_layer* acl2 = new Activation_layer(than);
     Fc_Layer* fc2 = new Fc_Layer(100,10);
     Activation_layer* acl3 = new Activation_layer(than);

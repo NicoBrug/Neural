@@ -19,7 +19,7 @@ MatrixXd Core::RandomMatrix(int rows, int cols, float min, float max){
 };
 
 // VALID ->  [(n x n) image] * [(f x f) filter] —> [(n – f + 1) x (n – f + 1) image]
-// SAME ->   [(n + 2p) x (n + 2p) image] * [(f x f) filter] —> [(n x n) image]  -> p = (f-1)/2
+// SAME  ->   [(n + 2p) x (n + 2p) image] * [(f x f) filter] —> [(n x n) image]  -> p = (f-1)/2
 MatrixXd Core::Correlate2D(MatrixXd input, MatrixXd filter, int stride, string padding){
     MatrixXd pad;
     int sizeFilter = filter.rows();

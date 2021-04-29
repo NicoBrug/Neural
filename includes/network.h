@@ -29,9 +29,9 @@
 #include <sciplot/sciplot.hpp>
 #include <omp.h>
 #include <thread>
-#include "layer.h"
-#include "fc_layer.h"
-#include "activation_layer.h"
+#include "layers/layer.h"
+#include "layers/fc_layer.h"
+#include "layers/activation_layer.h"
 #include "loss.h"
 
 class Network

@@ -32,25 +32,29 @@ set(CMAKE_CXX_FLAGS "-O3")
 
 
 add_library(Neural STATIC
+    #Layers SOURCE
+    src/layers/fc_layer.cpp
+    src/layers/layer.cpp
+    src/layers/activation_layer.cpp
+    src/layers/conv_layer.cpp
+    src/layers/flatten_layer.cpp
+
     src/network.cpp
-    src/fc_layer.cpp
-    src/layer.cpp
-    src/activation_layer.cpp
     src/kernel.cu
     src/core.cpp
-    src/flatten_layer.cpp
     src/loader/mnist.cpp
-    src/conv_layer.cpp
 
-    includes/activation.h
-    includes/activation_layer.h
-    includes/fc_layer.h
-    includes/layer.h
+    #Layers INCLUDE
+    includes/layers/activation_layer.h
+    includes/layers/fc_layer.h
+    includes/layers/layer.h
+    includes/layers/conv_layer.h
+    includes/layers/flatten_layer.h
+
     includes/network.h
+    includes/activation.h
     includes/kernel.h
     includes/core.h
-    includes/conv_layer.h
-    includes/flatten_layer.h
 
     includes/loader/mnist.h
 

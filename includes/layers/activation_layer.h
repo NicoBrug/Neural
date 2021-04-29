@@ -5,7 +5,7 @@
 #include <iostream>
 #include <eigen3/Eigen/Dense>
 #include "layer.h"
-#include "activation.h"
+#include "../activation.h"
 
 class Activation_layer : public Layer
 {

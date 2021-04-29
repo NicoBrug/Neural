@@ -1,4 +1,4 @@
-#include "../includes/activation_layer.h"
+#include "../../includes/layers/activation_layer.h"
 
 using namespace std;
 using Eigen::MatrixXd;

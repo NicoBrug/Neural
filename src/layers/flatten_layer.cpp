@@ -1,4 +1,4 @@
-#include "../includes/flatten_layer.h"
+#include "../../includes/layers/flatten_layer.h"
 
 using namespace Eigen;
 using namespace std;

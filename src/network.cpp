@@ -1,5 +1,5 @@
 #include "../includes/network.h"
-#include "../includes/fc_layer.h"
+#include "../includes/layers/fc_layer.h"
 #include "../includes/core.h"
 
 

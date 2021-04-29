@@ -1,6 +1,6 @@
-#include "../includes/fc_layer.h"
-#include "../includes/core.h"
-#include "../includes/kernel.h"
+#include "../../includes/layers/fc_layer.h"
+#include "../../includes/core.h"
+#include "../../includes/kernel.h"
 
 using namespace std;
 using Eigen::MatrixXd;

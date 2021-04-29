@@ -1,5 +1,5 @@
-#include "../includes/conv_layer.h"
-#include "../includes/core.h"
+#include "../../includes/layers/conv_layer.h"
+#include "../../includes/core.h"
 
 using namespace Eigen;
 using namespace std;
