@@ -1,4 +1,6 @@
 #include "../../includes/loader/mnist.h"
+#include <iostream>
+
 #include <fstream>
 #include <assert.h>
 
@@ -58,7 +60,7 @@ mnist::load_images(std::string image_file, int num)
     ifs.read(q, m_rows * m_cols);
     std::vector<double> image(m_rows * m_cols);
     for (int j=0; j<m_rows * m_cols; ++j) {
-      image[j] = q[j] / 255.0;
+      image[j] = static_cast<unsigned char>(q[j]) / 255.0;
     }
     m_images.push_back(image);
   }

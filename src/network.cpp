@@ -16,6 +16,8 @@ typedef Matrix<double,Dynamic,Dynamic,RowMajor> RowMajMat;
  */
 Network::Network(){
     cout << "no specified network, if you wan't load network, please use constructor Network(string path)" << endl;
+    system("setterm -cursor off");
+
 };
 
 /** Constructor network with path of exist save network
@@ -23,6 +25,7 @@ Network::Network(){
  */
 Network::Network(string s){
     Load(s);
+    system("setterm -cursor off");
 };
 
 /** Destructor -> liberate Layer memory
@@ -105,10 +108,10 @@ void Network::Fit(MatrixXd x_train, MatrixXd y_train, int epochs, double learnin
             
             RowMajMat output(1,cols);
             output.row(0) = x_train.row(j);
-            
             for (int l(0);l<m_layer.size();l++){
                 output = m_layer[l]->Forward_propagation(output);
             } 
+
 
             err += this->m_loss->Compute(y_train.row(j), output);
 
@@ -120,12 +123,12 @@ void Network::Fit(MatrixXd x_train, MatrixXd y_train, int epochs, double learnin
 
             int percent = (j*100)/samples;
             cout << "\r" << "epoch : " << i+1 << "/" << epochs << " " << percent+1 << "%" << " | samples : " << j+1 << " | " << " loss " << err/samples ;
-
+ 
         }
         auto t_end = std::chrono::high_resolution_clock::now();
         double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end-t_start).count();
 
-        cout << " | " << " ops time " << elapsed_time_ms << endl;
+        cout << " | " << " time " << elapsed_time_ms*0.001 << "s " << endl;
         m_error.push_back(err/samples); 
     }
     auto stop = high_resolution_clock::now();
@@ -133,7 +136,7 @@ void Network::Fit(MatrixXd x_train, MatrixXd y_train, int epochs, double learnin
 
     PlotData(epochs,m_error);
 
-    cout << "\nTime taken by fitting: " << duration.count() << " microseconds" << endl; 
+    cout << "\nTime taken by fitting: " << duration.count()*0.000001 << " second" << endl; 
 }
 
 

@@ -1,16 +1,28 @@
 #include <iostream>
 #include <eigen3/Eigen/Dense>
-#include "../header/network.h"
-#include "../header/fc_layer.h"
-#include "../header/activation_layer.h"
-#include "../header/activation.h"
+#include <chrono>
+#include "../includes/network.h"
+#include "../includes/fc_layer.h"
+#include "../includes/activation_layer.h"
+#include "../includes/flatten_layer.h"
+#include "../includes/activation.h"
+#include "../includes/loss.h"
+#include "../includes/kernel.h"
+#include "../includes/core.h"
+#include "../includes/loader/mnist.h"
+#include "../includes/conv_layer.h"
+
+#include <EigenRand/EigenRand>
+#include <eigen3/Eigen/Core>
 
 using namespace Eigen;
 using Eigen::MatrixXd;
 using namespace std;
 
+
+
 int main() {
-    
+
     mnist train("../dataset/MNIST/train-images-idx3-ubyte",
 		     "../dataset/MNIST/train-labels-idx1-ubyte", 1000);
 
@@ -67,39 +79,40 @@ int main() {
         mnist_test_label.row(i) = label;
     }
 
-    Network net;
+    std::tuple<int, int, int> dimensions1 = std::make_tuple(28,28,1);
+    std::tuple<int, int, int> filter1 = std::make_tuple(3,3,1);
 
+    std::tuple<int, int, int> dimensions2 = std::make_tuple(8,8,1);
+    std::tuple<int, int, int> filter2 = std::make_tuple(3,3,1);
+
+    std::tuple<int, int, int> dimensions3 = std::make_tuple(6,6,1);
+    std::tuple<int, int, int> filter3 = std::make_tuple(3,3,2);
+
+    Network net; 
     Activation* than = new Than();
-    Activation* relu = new Relu();
-    Activation* softmax = new Softmax();
-    Activation* sigmoid = new Sigmoid();
-
     Loss* mse = new Mse();
     net.Use(mse);
 
-    Fc_Layer* fcl1 = new Fc_Layer(784,100);
+    Conv_layer* c1 = new Conv_layer(dimensions1,filter1,1,1);
     Activation_layer* acl1 = new Activation_layer(than);
-    Fc_Layer* fcl2 = new Fc_Layer(100,50);
+    Flatten_layer* fl = new Flatten_layer();
+    Fc_Layer* fc1 = new Fc_Layer(784,100);
     Activation_layer* acl2 = new Activation_layer(than);
-    Fc_Layer* fcl3 = new Fc_Layer(50,10);
+    Fc_Layer* fc2 = new Fc_Layer(100,10);
     Activation_layer* acl3 = new Activation_layer(than);
 
-    net.Add(fcl1);
+
+    net.Add(c1);
     net.Add(acl1);
-    net.Add(fcl2);
+    net.Add(fl);
+    net.Add(fc1);
     net.Add(acl2);
-    net.Add(fcl3);
+    net.Add(fc2);
     net.Add(acl3);
 
-    
-    //Fit network
-    net.Fit(mnist_matrix,mnist_label,35,0.1,50);
-
+    net.Fit(mnist_matrix,mnist_label,100,0.1,1);
     net.Predict(mnist_test);
 
     cout << "result true \n" << mnist_test_label << endl;
-    
-
     return 0;
-
 }

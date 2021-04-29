@@ -1,3 +1,19 @@
+/**
+ * \class Network
+ *
+ *
+ * \brief Provide an example
+ *
+ * this class is the root class to create a neural network. 
+ * Instantiate this class to add layers to the network, train the network, save the weights and load a pre-existing network.
+ *
+ * \note Attempts at zen rarely work.
+ *
+ * \author (last to touch it) $Author: Brugie Nicolas $
+ *
+ *
+ */
+
 #ifndef NETWORK_H 
 #define NETWORK_H
 

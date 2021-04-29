@@ -24,6 +24,11 @@ link_directories(lib/EigenRand-0.3.3)
 
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}") 
+set(CMAKE_CXX_FLAGS "-march=native")
+set(CMAKE_CXX_FLAGS "-mfpmath=sse")
+set(CMAKE_CXX_FLAGS "-ftree-vectorize")
+set(CMAKE_CXX_FLAGS "-O3")
+
 
 
 add_library(Neural STATIC
@@ -33,8 +38,9 @@ add_library(Neural STATIC
     src/activation_layer.cpp
     src/kernel.cu
     src/core.cpp
-
+    src/flatten_layer.cpp
     src/loader/mnist.cpp
+    src/conv_layer.cpp
 
     includes/activation.h
     includes/activation_layer.h
@@ -43,6 +49,9 @@ add_library(Neural STATIC
     includes/network.h
     includes/kernel.h
     includes/core.h
+    includes/conv_layer.h
+    includes/flatten_layer.h
+
     includes/loader/mnist.h
 
   )
@@ -70,12 +79,9 @@ set_target_properties( Neural
                       )
 
 if(BUILD_TESTING)
-
   add_executable(test_neural ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
-
   set_target_properties(test_neural  PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
   target_link_libraries(test_neural  PRIVATE Neural)
-
   if(APPLE)
     # We need to add the default path to the driver (libcuda.dylib) as an rpath,
     # so that the static cuda runtime can find it at runtime.

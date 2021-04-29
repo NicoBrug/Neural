@@ -55,19 +55,18 @@ MatrixXd Fc_Layer::Backward_propagation(MatrixXd output_error, float learning_ra
 
 
     //GPU
-    double* input_error_array = Kernel::dot(output_error.data(), m_weights.transpose().data(),output_error.rows(),output_error.cols(),m_weights.rows()); 
+    //double* input_error_array = Kernel::dot(output_error.data(), m_weights.transpose().data(),output_error.rows(),output_error.cols(),m_weights.rows()); 
     //double* weights_error_array = Kernel::dot(m_input.transpose().data(), output_error.data(),m_input.cols(),m_input.rows(),output_error.cols()); 
     
     //CPU
-    //MatrixXd input_error = output_error*m_weights.transpose();
+    MatrixXd input_error = output_error*m_weights.transpose();
     MatrixXd weights_error = m_input.transpose()*output_error;
 
-    MatrixXd input_error = Map<Matrix<double,Dynamic,Dynamic> >(input_error_array,output_error.rows(),m_weights.rows());
+    //MatrixXd input_error = Map<Matrix<double,Dynamic,Dynamic> >(input_error_array,output_error.rows(),m_weights.rows());
     //MatrixXd weights_error = Map<Matrix<double,Dynamic,Dynamic,RowMajor> >(weights_error_array,m_input.cols(),output_error.cols());
 
-    this->m_weights -= learning_rate * weights_error;
-    this->m_bias -= learning_rate * output_error;
-
+    this->m_weights.noalias() -= learning_rate * weights_error;
+    this->m_bias.noalias() -= learning_rate * output_error;
     return input_error;
 };
 

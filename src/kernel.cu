@@ -123,5 +123,8 @@ namespace Kernel
         
         return ret;
     }
+
+    /*-------------------- dot product matrix ---------------------*/
+    
 }
 

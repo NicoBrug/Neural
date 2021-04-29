@@ -12,6 +12,7 @@ RUN apt-get update -yq \
 && apt-get install -qqy x11-apps -y\
 && apt-get install nvidia-cuda-dev -y \
 && apt-get install nvidia-cuda-toolkit -y\
+&& apt-get install doxygen -y \
 && apt-get update -y \
 && apt-get clean
 

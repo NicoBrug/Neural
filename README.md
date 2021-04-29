@@ -102,11 +102,10 @@ net.Plot("loss");
 ## Exemple
 ### MNIST
 Use of the stochastic gradient descent method with the mean square error calculation function.
-Loss 
+ 
 ![Screenshot](pics/mnistloss.png?raw=true )
 
 ## Roadmap
-- [x] Dev env : Docker + Cmake
 - Activation function
     - [x] Tanh 
     - [x] Sigmoid
@@ -118,10 +117,17 @@ Loss
     - [ ] CRE
 - Layer 
     - [x] Full connected
-    - [ ] Flatten
+    - [ ] Flatten (in dev)
     - [ ] Conv (in dev)
 - CudaSupport 
     - [x] Matrix multiplication
+- Save&Load networks
+    - [x] JSON
+    - [ ] HDF5
+- MathUtils
+    - [x] Cross correlation
+    - [x] Padding
+    - [x] Convolution    
     
 <!-- LICENSE -->
 ## License
