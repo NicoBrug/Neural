@@ -1,5 +1,6 @@
 
 #include "../../includes/layers/layer.h"
+using namespace Neural;
 
 /** Checks if the current layer has weights
  * 

@@ -2,6 +2,7 @@
 
 using namespace Eigen;
 using namespace std;
+using namespace Neural;
 
 MatrixXd Core::RandomMatrix(int rows, int cols, float min, float max){
     MatrixXd m{rows,cols};

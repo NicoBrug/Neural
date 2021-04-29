@@ -7,20 +7,22 @@
 #include "layer.h"
 #include "../activation.h"
 
-class Activation_layer : public Layer
+namespace Neural
 {
+    class Activation_layer : public Layer
+    {
 
-    public:
-        Activation_layer();
-        Activation_layer(Activation *a);
-        ~Activation_layer();
+        public:
+            Activation_layer();
+            Activation_layer(Activation *a);
+            ~Activation_layer();
 
-        virtual Eigen::MatrixXd Forward_propagation(Eigen::MatrixXd input_data);
-        virtual Eigen::MatrixXd Backward_propagation(Eigen::MatrixXd output_error, float learning_rate);
-        virtual Json::Value toJSON();
-        
-        Activation *p_activation;
+            virtual Eigen::MatrixXd Forward_propagation(Eigen::MatrixXd input_data);
+            virtual Eigen::MatrixXd Backward_propagation(Eigen::MatrixXd output_error, float learning_rate);
+            virtual Json::Value toJSON();
+            
+            Activation *p_activation;
 
-};
-
+    };
+}
 #endif

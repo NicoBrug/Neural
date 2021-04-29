@@ -8,18 +8,20 @@
 #include "layer.h"
 #include <chrono>
 
-class Flatten_layer : public Layer
+namespace Neural
 {
+    class Flatten_layer : public Layer
+    {
 
-    public:
-        Flatten_layer();
-        virtual Eigen::MatrixXd Forward_propagation(Eigen::MatrixXd input);
-        virtual Eigen::MatrixXd Backward_propagation(Eigen::MatrixXd output_error, float learning_rate);
-        virtual Json::Value toJSON();
+        public:
+            Flatten_layer();
+            virtual Eigen::MatrixXd Forward_propagation(Eigen::MatrixXd input);
+            virtual Eigen::MatrixXd Backward_propagation(Eigen::MatrixXd output_error, float learning_rate);
+            virtual Json::Value toJSON();
 
 
-    protected:
+        protected:
 
-};
-
+    };
+}
 #endif

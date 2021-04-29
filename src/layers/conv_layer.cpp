@@ -3,6 +3,7 @@
 
 using namespace Eigen;
 using namespace std;
+using namespace Neural;
 
 
 

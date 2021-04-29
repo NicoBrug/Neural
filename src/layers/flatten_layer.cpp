@@ -2,6 +2,8 @@
 
 using namespace Eigen;
 using namespace std;
+using namespace Neural;
+
 typedef Matrix<double,Dynamic,Dynamic,RowMajor> RowMajMat; 
 
 

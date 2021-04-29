@@ -1,4 +1,3 @@
-
 ![Screenshot](pics/logo.png?raw=true )
 ## Description
 Neural is a library developed in C++ allowing the realization of artificial neural networks. It is intended to be simple to use and easy to install (Just create the Docker and start to code!). If you encounter any problem, don't hesitate to let me know. 
@@ -117,10 +116,12 @@ Use of the stochastic gradient descent method with the mean square error calcula
     - [ ] CRE
 - Layer 
     - [x] Full connected
-    - [ ] Flatten (in dev)
-    - [ ] Conv (in dev)
+    - [x] Flatten
+    - [x] Convolution
 - CudaSupport 
     - [x] Matrix multiplication
+    - [ ] Cross correlation
+    - [ ] Convolution
 - Save&Load networks
     - [x] JSON
     - [ ] HDF5
@@ -128,6 +129,7 @@ Use of the stochastic gradient descent method with the mean square error calcula
     - [x] Cross correlation
     - [x] Padding
     - [x] Convolution    
+- GUI (In dev)
     
 <!-- LICENSE -->
 ## License

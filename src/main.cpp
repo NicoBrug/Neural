@@ -18,6 +18,7 @@
 using namespace Eigen;
 using Eigen::MatrixXd;
 using namespace std;
+using namespace Neural;
 
 
 
@@ -110,7 +111,7 @@ int main() {
     net.Add(fc2);
     net.Add(acl3);
 
-    net.Fit(mnist_matrix,mnist_label,100,0.1,1);
+    net.Fit(mnist_matrix,mnist_label,35,0.1,1);
     net.Predict(mnist_test);
 
     cout << "result true \n" << mnist_test_label << endl;

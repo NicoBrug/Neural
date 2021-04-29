@@ -7,19 +7,21 @@
 #include <jsoncpp/json/json.h>
 
 
-class Layer
+namespace Neural
 {
-    public:
-        virtual Eigen::MatrixXd Forward_propagation(Eigen::MatrixXd input) = 0;
-        virtual Eigen::MatrixXd Backward_propagation(Eigen::MatrixXd output_error, float learning_rate) = 0;
-        virtual Json::Value toJSON() = 0;
-        bool AsWeights();
+    class Layer
+    {
+        public:
+            virtual Eigen::MatrixXd Forward_propagation(Eigen::MatrixXd input) = 0;
+            virtual Eigen::MatrixXd Backward_propagation(Eigen::MatrixXd output_error, float learning_rate) = 0;
+            virtual Json::Value toJSON() = 0;
+            bool AsWeights();
 
-    protected:
-        Eigen::MatrixXd m_input;
-        Eigen::MatrixXd m_output;
-        bool m_as_weight;
-        
-};
-
+        protected:
+            Eigen::MatrixXd m_input;
+            Eigen::MatrixXd m_output;
+            bool m_as_weight;
+            
+    };
+}
 #endif

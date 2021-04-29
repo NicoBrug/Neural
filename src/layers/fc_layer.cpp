@@ -5,6 +5,7 @@
 using namespace std;
 using Eigen::MatrixXd;
 using namespace Eigen;
+using namespace Neural;
 
 /** Constructor of the Full connected Layer, Generate Weight & Bias random Matrix 
  * 

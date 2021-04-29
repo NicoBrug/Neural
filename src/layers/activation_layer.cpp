@@ -3,6 +3,7 @@
 using namespace std;
 using Eigen::MatrixXd;
 using namespace Eigen;
+using namespace Neural;
 
 /** Constructor of the Activation Layer
  * 

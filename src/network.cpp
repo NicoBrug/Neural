@@ -8,21 +8,27 @@ using namespace std::chrono;
 using Eigen::MatrixXd;
 using namespace Eigen;
 using namespace sciplot;
+using namespace Neural;
 
 typedef Matrix<double,Dynamic,Dynamic,RowMajor> RowMajMat; 
 
-/** Constructor network with no argument
+
+/**
+ * @brief Constructor of Network class
  * 
- */
+*/
+
 Network::Network(){
     cout << "no specified network, if you wan't load network, please use constructor Network(string path)" << endl;
     system("setterm -cursor off");
 
 };
 
-/** Constructor network with path of exist save network
- * 
- */
+/**
+ * @brief Constructor of Network class
+ * @param s Path of the existing network for rebuild the network with JSON file
+*/
+
 Network::Network(string s){
     Load(s);
     system("setterm -cursor off");
