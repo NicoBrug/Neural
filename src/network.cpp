@@ -145,7 +145,11 @@ void Network::Fit(MatrixXd x_train, MatrixXd y_train, int epochs, double learnin
     cout << "\nTime taken by fitting: " << duration.count()*0.000001 << " second" << endl; 
 }
 
-
+void Network::Evaluate(MatrixXd y_train, MatrixXd y_test){
+    //Perform forward propagation
+    //Define metrics
+    //Evaluate loss & accuracy
+}
 /** Save network state in json file
  * 
  *  @param name String name of file we wan't to create

@@ -76,7 +76,7 @@ MatrixXd Conv_layer::GetWeights(){
 };
 
 MatrixXd Conv_layer::GetBias(){
-
+return this->m_bias;
 };
 
 

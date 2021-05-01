@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <eigen3/Eigen/Dense>
 
 class mnist {
 private:
@@ -15,7 +16,8 @@ private:
   void load_images(std::string file, int num=0);
   void load_labels(std::string file, int num=0);
   int  to_int(char* p);
-
+  
+  
 public:
   mnist(std::string image_file, std::string label_file, int num);
   mnist(std::string image_file, std::string label_file);
@@ -27,6 +29,12 @@ public:
 
   std::vector<double> images(int id) { return m_images[id]; }
   int labels(int id) { return m_labels[id]; }
+
+  struct {
+    Eigen::MatrixXd images;
+    Eigen::MatrixXd labels;
+  } data;
+
 };
 
 #endif
