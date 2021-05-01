@@ -24,54 +24,49 @@ using namespace Neural;
 
 int main() {
 
-    //Load MNIST
-    mnist train("../dataset/MNIST/train-images-idx3-ubyte",
-		     "../dataset/MNIST/train-labels-idx1-ubyte", 1000);
+    MatrixXd x_data(4,2);
+    x_data << 
+            0,0,
+            0,1,
+            1,0,
+            1,1;
 
-    mnist test("../dataset/MNIST/t10k-images-idx3-ubyte",
-		     "../dataset/MNIST/t10k-labels-idx1-ubyte", 30);
+    MatrixXd x_train(4,1);
+    x_train <<  0,
+                1,
+                1,
+                0;
 
-    //Declare dimension for convolution layer & filter
-    std::tuple<int, int, int> dimensions = std::make_tuple(28,28,1);
-    std::tuple<int, int, int> filter = std::make_tuple(3,3,2);
+    MatrixXd x_test(4,2);
+    x_test << 
+            1,1, // -> 0 //Result we waiting
+            0,1, // -> 1
+            0,0, // -> 0
+            1,0; // -> 1
 
-    //Init network without pre-load configuration
-    Network net; 
 
-    //Create new activation & loss function
-    Activation* than = new Than();
-    Loss* mse = new Mse();
+    Network net;
 
-    //Tell to network to use mean squared error for compute loss
+    Loss* mse = new Mse(); 
+    Loss* cre = new Cross_entropy(); 
     net.Use(mse);
+    
+    Activation* than = new Than();
 
-    //Create configuration of network
-    Conv_layer* c1 = new Conv_layer(dimensions,filter,1,1);
+    Fc_Layer* fcl1 = new Fc_Layer(2,5);
     Activation_layer* acl1 = new Activation_layer(than);
-    Flatten_layer* fl = new Flatten_layer();
-    Fc_Layer* fc1 = new Fc_Layer(784*2,100);
+    Fc_Layer* fcl2 = new Fc_Layer(5,1);
     Activation_layer* acl2 = new Activation_layer(than);
-    Fc_Layer* fc2 = new Fc_Layer(100,10);
-    Activation_layer* acl3 = new Activation_layer(than);
 
-
-    //Add the configuration to network
-    net.Add(c1);
+    net.Add(fcl1);
     net.Add(acl1);
-    net.Add(fl);
-    net.Add(fc1);
+    net.Add(fcl2);
     net.Add(acl2);
-    net.Add(fc2);
-    net.Add(acl3);
 
-    //Fit the network with MNIST image & label
-    net.Fit(train.data.images,train.data.labels,35,0.1,1);
+    net.Fit(x_data,x_train,100,0.1,1);
 
-    //Make prediction for verify the network
-    net.Predict(test.data.images);
+    net.Predict(x_test);
 
-    //Print true result
-    cout << "result true \n" << test.data.labels << endl;
     
 
     return 0;

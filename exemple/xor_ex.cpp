@@ -20,18 +20,17 @@ int main() {
 
     MatrixXd x_train(4,1);
     x_train <<  0,
-                0,
                 1,
-                1;
+                1,
+                0;
 
     MatrixXd x_test(4,2);
     x_test << 
-            1,1, // -> 1 //Result we waiting
-            0,1, // -> 0
+            1,1, // -> 0 //Result we waiting
+            0,1, // -> 1
             0,0, // -> 0
             1,0; // -> 1
 
-    Network net;
 
     Loss* mse = new Mse(); 
     Loss* cre = new Cross_entropy(); 
@@ -49,7 +48,7 @@ int main() {
     net.Add(fcl2);
     net.Add(acl2);
 
-    net.Fit(x_data,x_train,100,0.1);
+    net.Fit(x_data,x_train,100,0.1,1);
 
     net.Predict(x_test);
 

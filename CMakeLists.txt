@@ -76,7 +76,6 @@ endif()
 
 
 target_compile_features(Neural PUBLIC cxx_std_11)
-#target_compile_options(Neural PUBLIC -Wall -Wextra -Wpedantic)
 
 set_target_properties( Neural
                        PROPERTIES CUDA_SEPARABLE_COMPILATION ON

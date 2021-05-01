@@ -118,6 +118,7 @@ Use of the stochastic gradient descent method with the mean square error calcula
     - [x] Full connected
     - [x] Flatten
     - [x] Convolution
+    - [ ] Associative (in R&D)
 - CudaSupport 
     - [x] Matrix multiplication
     - [ ] Cross correlation

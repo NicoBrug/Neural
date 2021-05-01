@@ -30,15 +30,13 @@ mnist::~mnist()
   // empty
 }
 
-int
-mnist::to_int(char* p)
+int mnist::to_int(char* p)
 {
   return ((p[0] & 0xff) << 24) | ((p[1] & 0xff) << 16) |
          ((p[2] & 0xff) <<  8) | ((p[3] & 0xff) <<  0);
 }
 
-void
-mnist::load_images(std::string image_file, int num)
+void mnist::load_images(std::string image_file, int num)
 {
   std::ifstream ifs(image_file.c_str(), std::ios::in | std::ios::binary);
   char p[4];
@@ -80,8 +78,7 @@ mnist::load_images(std::string image_file, int num)
   ifs.close();
 }
 
-void
-mnist::load_labels(std::string label_file, int num)
+void mnist::load_labels(std::string label_file, int num)
 {
   std::ifstream ifs(label_file.c_str(), std::ios::in | std::ios::binary);
   char p[4];

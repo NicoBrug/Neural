@@ -18,7 +18,6 @@ int main() {
 		     "../dataset/MNIST/t10k-labels-idx1-ubyte", 30);
 
     
-
     Network net;
     net.SetThreads(16);
 
@@ -43,9 +42,9 @@ int main() {
     //Fit network
     net.Fit(train.data.images,train.data.labels,4,0.1,50);
 
-    //net.Predict(mnist_test);
+    //net.Predict(test.data.images);
 
-    //cout << "result true \n" << mnist_test_label << endl;
+    //cout << "result true \n" << test.data.labels << endl;
     
 
     return 0;
