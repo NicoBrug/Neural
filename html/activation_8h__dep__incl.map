@@ -1,0 +1,9 @@
+<map id="neural/includes/activation.h" name="neural/includes/activation.h">
+<area shape="rect" id="node1" title=" " alt="" coords="314,5,517,32"/>
+<area shape="rect" id="node2" href="$activation__layer_8h.html" title="This class is the Base class for all activation types." alt="" coords="238,80,403,121"/>
+<area shape="rect" id="node6" href="$plotter_8h.html" title=" " alt="" coords="427,80,595,121"/>
+<area shape="rect" id="node3" href="$activation__layer_8cpp.html" title=" " alt="" coords="5,169,204,211"/>
+<area shape="rect" id="node4" href="$network_8h.html" title="This class allows to create the root structure of the network." alt="" coords="228,177,419,203"/>
+<area shape="rect" id="node5" href="$network_8cpp.html" title=" " alt="" coords="238,259,409,285"/>
+<area shape="rect" id="node7" href="$plotter_8cpp.html" title=" " alt="" coords="445,169,578,211"/>
+</map>

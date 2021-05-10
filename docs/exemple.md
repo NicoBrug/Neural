@@ -6,7 +6,7 @@ Exemple
 This example consists in using a multilayer perceptron to solve the XOR problem.
 To understand this example, let's look at this diagram for a moment. 
 
-\image html mages/XORproblem.jpeg width=700px
+\image html images/XORproblem.jpeg width=400px
 
 First of all, it is necessary to create the data we need to train the neural network. 
 ```

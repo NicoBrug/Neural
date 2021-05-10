@@ -1,0 +1,9 @@
+<map id="neural/includes/layers/flatten_layer.h" name="neural/includes/layers/flatten_layer.h">
+<area shape="rect" id="node1" title="This class allows the creation of a Flatten layer." alt="" coords="173,5,339,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,169,85,196"/>
+<area shape="rect" id="node3" title=" " alt="" coords="290,169,441,196"/>
+<area shape="rect" id="node4" title=" " alt="" coords="174,95,338,121"/>
+<area shape="rect" id="node5" href="$layer_8h.html" title="This class is the Base class for all Layers types." alt="" coords="83,95,149,121"/>
+<area shape="rect" id="node7" title=" " alt="" coords="413,95,480,121"/>
+<area shape="rect" id="node6" title=" " alt="" coords="109,169,256,196"/>
+</map>

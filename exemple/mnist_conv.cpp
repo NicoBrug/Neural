@@ -16,7 +16,6 @@
 #include <eigen3/Eigen/Core>
 
 using namespace Eigen;
-using Eigen::MatrixXd;
 using namespace std;
 
 

@@ -1,0 +1,5 @@
+<map id="Neural::Loss" name="Neural::Loss">
+<area shape="rect" id="node1" title=" " alt="" coords="116,5,219,32"/>
+<area shape="rect" id="node2" href="$classNeural_1_1Cross__entropy.html" title=" " alt="" coords="5,80,172,107"/>
+<area shape="rect" id="node3" href="$classNeural_1_1Mse.html" title=" " alt="" coords="196,80,296,107"/>
+</map>

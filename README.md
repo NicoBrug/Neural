@@ -4,16 +4,17 @@ Neural is a library developed in C++ allowing the realization of artificial neur
 
 ## Getting Started
 To get a local copy up and running follow these simple steps.
+
 ### Prerequisites
 * Docker
-* nvidia-docker2
 ```
 git clone https://github.com/NicoBrug/Neural.git
 ```
 ## How to install the development environment
+### Docker
+
 Ok, first let's start by building the image (the development environment). 
 ```
-xhost local:root
 docker build -t neural-cuda .
 ```
 Now we need to create the container. To do this we need to specify that we want to "share" the folder with our container. (path = The path to the folder where Neural is located )
@@ -26,8 +27,24 @@ sudo docker run \
     -e DISPLAY=unix$DISPLAY \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v ~/Documents/neuralnetworks/Neural:/home/Projects/Neural \
-    -t neural-cuda /bin/bash
+    --name NeuralGL \
+    -t neuralcontaiiner:latest /bin/bash 
 ```
+### Nvidia & Cuda toolkit
+Install Nvidia Toolkit without drivers, first Run the container and enter in terminal
+```
+wget https://developer.download.nvidia.com/compute/cuda/11.3.0/local_installers/cuda_11.3.0_465.19.01_linux.run
+sh cuda_11.3.0_465.19.01_linux.run
+```
+### Cmake
+https://cmake.org/download/ version > 18.6
+```
+./configure
+make
+make install
+```
+### Qt
+
 Now we want to compile the project and check that the development environment is ready!
 ```
 mkdir build
