@@ -1,3 +1,12 @@
+/**
+ * \file plotter.cpp
+ * \brief  GUI Plotter for graphical debuging 
+ * \author Brugie Nicolas
+ * \version 0.1
+ *
+ * Class allowing to display different types of graphs: activation function graph, error graph, data graph. 
+ *
+ */
 #include "../../includes/plotter/plotter.h"
 
 using namespace Neural;
@@ -10,35 +19,29 @@ Plotter::Plotter(){
 
 
 void Plotter::Plot(Activation *func){
-   vector<double> data;
 
-   sciplot::Plot plot;
-   
-   int nb = 100;
-   for (int i(-nb); i<=nb; i++){
-       data.push_back(i*0.1);
-   }
+    sciplot::Plot plot;
+    int nb = 100;
+    vector<double> data;
+    MatrixXd d(1,nb*2);
 
-   MatrixXd d(1,nb*2);
-   double* ptr = &data[0];
-   Map<RowVectorXd> v(ptr,nb*2);
-   d.row(0) = v;
+    for (int i(-nb); i<=nb; i++){
+        data.push_back(i*0.1);
+    }
 
+    double* ptr = &data[0];
+    Map<RowVectorXd> v(ptr,nb*2);
+    d.row(0) = v;
   
     MatrixXd res = func->Compute(d);
 
     std::vector<double> v3(&res(0), res.data()+res.cols()*res.rows());
 
-    
     plot.xlabel("x");
     plot.ylabel("y");
-
-    plot.xrange(-2, 2);
-    plot.yrange(-2.0, 2.0);
-    
+    plot.xrange(-10, 10);
+    plot.yrange(-2.0, 10.0);
     plot.legend().atOutsideTop();
-
-
     plot.drawCurve(data, v3).label(func->getType());
     plot.size(400, 400 );
     plot.xtics().logscale(2);    

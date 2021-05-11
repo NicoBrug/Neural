@@ -16,13 +16,13 @@
 
 namespace Neural
 {
-    class Activation_layer : public Layer
+    class Activation_Layer : public Layer
     {
 
         public:
-            Activation_layer();
-            Activation_layer(Activation *a);
-            ~Activation_layer();
+            Activation_Layer();
+            Activation_Layer(Activation *a);
+            ~Activation_Layer();
 
             virtual Eigen::MatrixXd Forward_propagation(Eigen::MatrixXd input_data);
             virtual Eigen::MatrixXd Backward_propagation(Eigen::MatrixXd output_error, float learning_rate);

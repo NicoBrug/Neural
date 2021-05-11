@@ -1,6 +1,15 @@
+/**
+ * \file mnist.cpp
+ * \brief  Loader MNIST
+ * \author Brugie Nicolas
+ * \version 0.1
+ *
+ * Class for loading and pre-processing MNIST data
+ *
+ */
+
 #include "../../includes/loader/mnist.h"
 #include <iostream>
-
 #include <fstream>
 #include <assert.h>
 

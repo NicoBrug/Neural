@@ -16,11 +16,11 @@
 
 namespace Neural
 {
-    class Flatten_layer : public Layer
+    class Flatten_Layer : public Layer
     {
 
         public:
-            Flatten_layer();
+            Flatten_Layer();
             virtual Eigen::MatrixXd Forward_propagation(Eigen::MatrixXd input);
             virtual Eigen::MatrixXd Backward_propagation(Eigen::MatrixXd output_error, float learning_rate);
             virtual Json::Value toJSON();

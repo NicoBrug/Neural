@@ -13,7 +13,7 @@ namespace Neural
         public:
             Activation() {};
             virtual Eigen::MatrixXd Compute(Eigen::MatrixXd x) = 0;
-            virtual Eigen::MatrixXd Compute_prime(Eigen::MatrixXd x) = 0 ;
+            virtual Eigen::MatrixXd ComputePrime(Eigen::MatrixXd x) = 0 ;
             std::string getType(){
                 return this->m_type;
             };
@@ -29,7 +29,7 @@ namespace Neural
             virtual Eigen::MatrixXd Compute(Eigen::MatrixXd x){
                 return x.array().tanh();
             }
-            virtual Eigen::MatrixXd Compute_prime(Eigen::MatrixXd x){
+            virtual Eigen::MatrixXd ComputePrime(Eigen::MatrixXd x){
                 return  1-x.array().tanh().pow(2);
             }
     };
@@ -42,7 +42,7 @@ namespace Neural
             virtual Eigen::MatrixXd Compute(Eigen::MatrixXd x){
                 return 1/(1+exp(-x.array()));
             }
-            virtual Eigen::MatrixXd Compute_prime(Eigen::MatrixXd x){
+            virtual Eigen::MatrixXd ComputePrime(Eigen::MatrixXd x){
                 return  (1 / (1 + exp(-x.array()))) * (1 - (1 / (1 + exp(-x.array()))));
             }
     };
@@ -56,7 +56,7 @@ namespace Neural
                 Eigen::MatrixXd expo = exp(x.array()-x.maxCoeff());
                 return expo/expo.sum();
             }
-            virtual Eigen::MatrixXd Compute_prime(Eigen::MatrixXd x){
+            virtual Eigen::MatrixXd ComputePrime(Eigen::MatrixXd x){
                 Eigen::MatrixXd exposum = (exp(x.array()-x.maxCoeff()))/(exp(x.array()-x.maxCoeff()).sum());
                 return exposum.array()*(1-exposum.array()); 
             }
@@ -70,7 +70,7 @@ namespace Neural
             virtual Eigen::MatrixXd Compute(Eigen::MatrixXd x){
                 return x.cwiseMax(0.0);
             }
-            virtual Eigen::MatrixXd Compute_prime(Eigen::MatrixXd x){
+            virtual Eigen::MatrixXd ComputePrime(Eigen::MatrixXd x){
                 for (int r(0); r<x.rows();r++){
                     for (int c(0); c<x.cols();c++){
                         if (x(r,c)<0){
@@ -93,7 +93,7 @@ namespace Neural
             virtual Eigen::MatrixXd Compute(Eigen::MatrixXd x){
                 return log(1+(exp(x.array()))); //y = log(1+exp(x)))
             }
-            virtual Eigen::MatrixXd Compute_prime(Eigen::MatrixXd x){
+            virtual Eigen::MatrixXd ComputePrime(Eigen::MatrixXd x){
                 return  1/(1+exp(-x.array())); //dy/dx = 1/(1+exp(-x))
             }
     };
@@ -110,7 +110,7 @@ namespace Neural
             virtual Eigen::MatrixXd Compute(Eigen::MatrixXd x){
                 return x.cwiseMax(0.0);
             }
-            virtual Eigen::MatrixXd Compute_prime(Eigen::MatrixXd x){
+            virtual Eigen::MatrixXd ComputePrime(Eigen::MatrixXd x){
                 for (int r(0); r<x.rows();r++){
                     for (int c(0); c<x.cols();c++){
                         if (x(r,c)<=0){
@@ -122,6 +122,42 @@ namespace Neural
                     }
                 }
                 return  x;
+            }
+    };
+
+        class Elu : public Activation {
+        public:
+            Elu(double a) {
+                m_type = "Elu";
+                m_alpha = a;
+            };
+            double m_alpha;
+
+            virtual Eigen::MatrixXd Compute(Eigen::MatrixXd x){
+                for (int r(0); r<x.rows();r++){
+                    for (int c(0); c<x.cols();c++){
+                        if (x(r,c)<0){
+                            x(r,c) = m_alpha*(exp(x(r,c))-1);
+                        }
+                        else{
+                            x(r,c) = x(r,c);
+                        }
+                    }
+                }
+                return  x;            
+            }
+            virtual Eigen::MatrixXd ComputePrime(Eigen::MatrixXd x){
+                for (int r(0); r<x.rows();r++){
+                    for (int c(0); c<x.cols();c++){
+                        if (x(r,c)<0){
+                            x(r,c) = m_alpha*exp(x(r,c));
+                        }
+                        if (x(r,c)>0){
+                            x(r,c) = 1;
+                        }
+                    }
+                }
+                return  x;             
             }
     };
 }

@@ -1,3 +1,13 @@
+/**
+ * \file network.cpp
+ * \brief  Neural networks base class 
+ * \author Brugie Nicolas
+ * \version 0.1
+ *
+ * Base class for the creation of a neural network.  
+ *
+ */
+
 #include "../includes/network.h"
 #include "../includes/layers/fc_layer.h"
 #include "../includes/core.h"
@@ -5,7 +15,6 @@
 
 using namespace std;
 using namespace std::chrono;
-using Eigen::MatrixXd;
 using namespace Eigen;
 using namespace sciplot;
 using namespace Neural;
@@ -125,11 +134,10 @@ void Network::Fit(MatrixXd x_train, MatrixXd y_train, int epochs, double learnin
             
             for (int k(m_layer.size()-1); k>=0; k--){
                 error = m_layer[k]->Backward_propagation(error,learning_rate);
-            } 
+            }  
 
             int percent = (j*100)/samples;
             cout << "\r" << "epoch : " << i+1 << "/" << epochs << " " << percent+1 << "%" << " | samples : " << j+1 << " | " << " loss " << err/samples ;
- 
         }
         auto t_end = std::chrono::high_resolution_clock::now();
         double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end-t_start).count();
@@ -192,7 +200,7 @@ void Network::Load(string path){
         Json::Value Layer = net[i];
 
         if (Layer["type"] == "ActivationLayer"){
-                Activation_layer* acl = new Activation_layer();
+                Activation_Layer* acl = new Activation_Layer();
                 this->Add(acl);
         }
 

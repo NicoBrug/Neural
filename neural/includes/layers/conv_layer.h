@@ -19,11 +19,11 @@ typedef Matrix<double,Dynamic,Dynamic,RowMajor> RowMajMat;
 
 namespace Neural
 {
-    class Conv_layer : public Layer
+    class Conv_Layer : public Layer
     {
 
         public:
-            Conv_layer(std::tuple<int,int,int> dimensions, 
+            Conv_Layer(std::tuple<int,int,int> dimensions, 
                     std::tuple<int,int,int> filter, 
                     int stride, 
                     int padding);

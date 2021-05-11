@@ -1,3 +1,13 @@
+/**
+ * \file conv_layer.cpp
+ * \brief  convolution layer
+ * \author Brugie Nicolas
+ * \version 0.1
+ *
+ * Class allowing the creation of an convolution layer within a neural network.
+ *
+ */
+
 #include "../../includes/layers/conv_layer.h"
 #include "../../includes/core.h"
 
@@ -7,7 +17,7 @@ using namespace Neural;
 
 
 
-Conv_layer::Conv_layer(std::tuple<int,int,int> dimensions, 
+Conv_Layer::Conv_Layer(std::tuple<int,int,int> dimensions, 
                        std::tuple<int,int,int> filter, 
                        int stride, 
                        int padding)
@@ -19,11 +29,10 @@ Conv_layer::Conv_layer(std::tuple<int,int,int> dimensions,
     this->m_nb_filters = get<2>(filter);
     this->m_stride = stride;
     this->m_padding = padding;
-
     this->m_weights = Init_filters(m_filter_size,m_nb_filters);
 };
 
-MatrixXd Conv_layer::Init_filters(int dim, int nb){
+MatrixXd Conv_Layer::Init_filters(int dim, int nb){
     RowMajMat filters(nb,dim*dim);
     for (int i(0); i<nb; i++ ){
             MatrixXd mat = Core::RandomMatrix(dim,dim,0,1);
@@ -33,7 +42,7 @@ MatrixXd Conv_layer::Init_filters(int dim, int nb){
     return filters;
 };
 
-MatrixXd Conv_layer::Forward_propagation(MatrixXd input_data){
+MatrixXd Conv_Layer::Forward_propagation(MatrixXd input_data){
     this->m_input = input_data;
     RowMajMat out(this->m_nb_filters,input_data.size());
     for (int i(0); i<this->m_nb_filters; i++ ){
@@ -48,7 +57,7 @@ MatrixXd Conv_layer::Forward_propagation(MatrixXd input_data){
 };
 
 
-MatrixXd Conv_layer::Backward_propagation(MatrixXd output_error, float learning_rate){
+MatrixXd Conv_Layer::Backward_propagation(MatrixXd output_error, float learning_rate){
     RowMajMat in_error(this->m_nb_filters,this->m_input.size());
     RowMajMat d_weights(this->m_weights.rows(),this->m_weights.cols());
     for (int i(0); i<this->m_nb_filters; i++ ){
@@ -71,19 +80,18 @@ MatrixXd Conv_layer::Backward_propagation(MatrixXd output_error, float learning_
     return in_error;
 };
 
-MatrixXd Conv_layer::GetWeights(){
+MatrixXd Conv_Layer::GetWeights(){
     return this->m_weights;
 };
 
-MatrixXd Conv_layer::GetBias(){
+MatrixXd Conv_Layer::GetBias(){
     return this->m_bias;
 };
 
-
-Json::Value Conv_layer::toJSON(){
+Json::Value Conv_Layer::toJSON(){
     Json::Value json;
 
-    json["type"] = "Conv_layer" ;
+    json["type"] = "Conv_Layer" ;
 
     return json;
 };

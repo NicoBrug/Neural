@@ -16,16 +16,16 @@ set(CMAKE_CUDA_STANDARD 11)
 find_package(PkgConfig REQUIRED)
 find_package(sciplot)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_AUTOMOC ON)
+#set(CMAKE_INCLUDE_CURRENT_DIR ON)
+#set(CMAKE_AUTOMOC ON)
 
-set(CMAKE_PREFIX_PATH "/opt/Qt/5.15.2/gcc_64")
-set(Qt5Core_DIR "/opt/Qt/5.15.2/gcc_64/lib/cmake/Qt5Core")
-set(Qt5_DIR "/opt/Qt/5.15.2/gcc_64/lib/cmake/Qt5")
-set(QT_QMAKE_EXECUTABLE "/opt/Qt/5.15.2/bin/qmake")
-set(LD_LIBRARY_PATH "/opt/Qt/5.15.2/gcc_64/lib/")
+# set(CMAKE_PREFIX_PATH "/opt/Qt/5.15.2/gcc_64")
+# set(Qt5Core_DIR "/opt/Qt/5.15.2/gcc_64/lib/cmake/Qt5Core")
+# set(Qt5_DIR "/opt/Qt/5.15.2/gcc_64/lib/cmake/Qt5")
+# set(QT_QMAKE_EXECUTABLE "/opt/Qt/5.15.2/bin/qmake")
+# set(LD_LIBRARY_PATH "/opt/Qt/5.15.2/gcc_64/lib/")
 
-find_package(Qt5 REQUIRED COMPONENTS Core Gui Widgets 3DCore 3DExtras 3DRender 3DInput Charts)
+#find_package(Qt5 REQUIRED COMPONENTS Core Gui Widgets 3DCore 3DExtras 3DRender 3DInput Charts)
 #set_property(TARGET Qt5::Core APPEND PROPERTY INTERFACE_COMPILE_OPTIONS -fPIC)
 
 set(CMAKE_CXX_FLAGS_COVERAGE "${CMAKE_CXX_FLAGS_RELEASE} -fprofile-arcs -ftest-coverage")
@@ -83,29 +83,30 @@ add_library(Neural STATIC
   )
 
 
-if ( TARGET Qt5::Core )
-	get_property( core_options TARGET Qt5::Core PROPERTY INTERFACE_COMPILE_OPTIONS )
-	string( REPLACE "-fPIC" "" new_core_options "${core_options}" )
-	set_property( TARGET Qt5::Core PROPERTY INTERFACE_COMPILE_OPTIONS ${new_core_options} )
-	set_property( TARGET Qt5::Core PROPERTY INTERFACE_POSITION_INDEPENDENT_CODE "ON" )
-	set( CMAKE_CXX_COMPILE_OPTIONS_PIE "-fPIC" )
-endif()
+# if ( TARGET Qt5::Core )
+# 	get_property( core_options TARGET Qt5::Core PROPERTY INTERFACE_COMPILE_OPTIONS )
+# 	string( REPLACE "-fPIC" "" new_core_options "${core_options}" )
+# 	set_property( TARGET Qt5::Core PROPERTY INTERFACE_COMPILE_OPTIONS ${new_core_options} )
+# 	set_property( TARGET Qt5::Core PROPERTY INTERFACE_POSITION_INDEPENDENT_CODE "ON" )
+# 	set( CMAKE_CXX_COMPILE_OPTIONS_PIE "-fPIC" )
+# endif()
 
 
 #https://gist.github.com/erikzenker/713c4ff76949058d5d5d
 
 target_link_libraries(Neural PUBLIC ${JSONCPP_LIBRARIES})
 target_link_libraries(Neural PUBLIC sciplot::sciplot)
-target_link_libraries(Neural PUBLIC
-    Qt5::Core
-    Qt5::Gui
-    Qt5::Widgets
-    Qt5::3DCore
-    Qt5::3DExtras
-    Qt5::3DRender
-    Qt5::3DInput
-    Qt5::Charts
-    )
+
+# target_link_libraries(Neural PUBLIC
+#     Qt5::Core
+#     Qt5::Gui
+#     Qt5::Widgets
+#     Qt5::3DCore
+#     Qt5::3DExtras
+#     Qt5::3DRender
+#     Qt5::3DInput
+#     Qt5::Charts
+#     )
 
 find_package(OpenMP)
 if(OpenMP_CXX_FOUND)

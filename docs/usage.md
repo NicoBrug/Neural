@@ -27,9 +27,11 @@ cre->ComputePrime(Matrix x, Matrix y);
 ```
 
 \section Sec3 Activation
-An Activation function are use to get the output of node. It is also known as Transfer Function.
+An Activation function is use to get the output of node. It is also known as Transfer Function.
+\see Neural::Activation
 
 \subsection SubActi1 Than
+
 
 This function is defined as the ratio between the hyperbolic sine and the cosine functions 
 
@@ -40,8 +42,10 @@ Activation* than = new Than();
 than->Compute(MatrixXd x);
 than->Compute_Prime(MatrixXd x);
 ```
+\see Neural::Than
 
 \subsection SubActi2 Sigmoid
+
 
 The following sigmoid activation function converts the weighted sum to a value between 0 and 1.
 
@@ -52,9 +56,10 @@ Activation* sig = new Sigmoid();
 sig->Compute(MatrixXd x);
 sig->Compute_Prime(MatrixXd x);
 ```
-
+\see Neural::Sigmoid
 
 \subsection SubActi3 SoftPlus
+
 
 Soft Plus function 
 
@@ -65,6 +70,8 @@ Activation* sp = new SoftPlus();
 sp->Compute(MatrixXd x);
 sp->Compute_Prime(MatrixXd x);
 ```
+
+\see Neural::SoftPlus
 
 \subsection SubActi4 ReLU
 
@@ -77,8 +84,10 @@ Activation* relu = new Relu();
 relu->Compute(MatrixXd x);
 relu->Compute_Prime(MatrixXd x);
 ```
+\see Neural::Relu
 
 \subsection SubActi5 LeakyReLU
+
 
 Leaky ReLUs allow a small, positive gradient when the unit is not active
 
@@ -89,19 +98,49 @@ Activation* Lrelu = new LeakyRelu(alpha);
 Lrelu->Compute(MatrixXd x);
 Lrelu->Compute_Prime(MatrixXd x);
 ```
+\see Neural::LeakyRelu
 
+\subsection SubActi6 Elu
+Exponential Linear Unit or its widely known name ELU is a function that tend to converge cost to zero faster and produce more accurate results. Different to other activation functions, ELU has a extra alpha constant which should be positive number.
 
-\subsection SubActi6 SoftPlus
+\image html images/EluPlot.png width=300px
+
+```
+Activation* elu = new Elu(alpha);
+Lrelu->Compute(MatrixXd x);
+Lrelu->Compute_Prime(MatrixXd x);
+```
+\see Neural::Elu
+
 
 \section Sec4 Layers
 
-\subsection SubLayers Convolution
+\subsection SubLayers Activation
+```
+Activation_layer(ptr);
+```
+\see Neural::Activation_layer
+
+\subsection SubLayers1 Full Connected
+
+```
+Fc_Layer(int,int);
+```
+\see Neural::Fc_Layer
+
+\subsection SubLayers2 Convolution
 Apply a Convolution on the inputs. The Convolution layer takes a tuple of 3 integers for the dimensions of the input and the kernel, and an integer for the stride and padding. 
 ```
 Conv_layer( dimensions<int,int,int>, filter<int,int,int>, stride=1,padding=1 );
-```
-\subsection SubLayers1 Flatten
 
-\subsection SubLayers2 Full Connected
+```
+\see Neural::Conv_Layer
+
+\subsection SubLayers3 Flatten
+```
+Flatten_layer();
+```
+\see Neural::Flatten_Layer
+
 
 

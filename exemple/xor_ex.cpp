@@ -39,9 +39,9 @@ int main() {
     Activation* than = new Than();
 
     Fc_Layer* fcl1 = new Fc_Layer(2,5);
-    Activation_layer* acl1 = new Activation_layer(than);
+    Activation_Layer* acl1 = new Activation_Layer(than);
     Fc_Layer* fcl2 = new Fc_Layer(5,1);
-    Activation_layer* acl2 = new Activation_layer(than);
+    Activation_Layer* acl2 = new Activation_Layer(than);
 
     net.Add(fcl1);
     net.Add(acl1);

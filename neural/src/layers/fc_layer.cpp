@@ -1,3 +1,12 @@
+/**
+ * \file fc_layer.cpp
+ * \brief  full connected layer
+ * \author Brugie Nicolas
+ * \version 0.1
+ *
+ * Class allowing the creation of an Dense/Full conncted layer within a neural network.
+ *
+ */
 #include "../../includes/layers/fc_layer.h"
 #include "../../includes/core.h"
 #include "../../includes/kernel.h"

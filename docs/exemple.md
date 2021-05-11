@@ -129,7 +129,57 @@ cout << "result true \n" << test.data.labels << endl;
 ```
 
 ## MNIST Conv
-Neural is a library developed in C++ allowing the realization of artificial neural networks. It is intended to be simple to use and easy to install (Just create the Docker and start to code!). If you encounter any problem, don't hesitate to let me know. 
+The MNIST problem can also be solved with a convolution network. 
 
-It is built on the basis of eigen which allows to facilitate the manipulation of data structures, and to have various functions of manipulation of matrices or lists. Moreover, eigen has natively a multi-threading function which allows you to easily add the number of threads you want to allocate to optimize the performances you need.
+Import the data : 
+```
+mnist train("../dataset/MNIST/train-images-idx3-ubyte",
+		     "../dataset/MNIST/train-labels-idx1-ubyte", 54000);
 
+mnist test("../dataset/MNIST/t10k-images-idx3-ubyte",
+		     "../dataset/MNIST/t10k-labels-idx1-ubyte", 30);
+```
+
+Create the network and assign thread
+```
+Network net;
+net.SetThreads(16);
+``` 
+Create activation and loss function
+```
+Activation* than = new Than();
+Loss* mse = new Mse();
+net.Use(mse);
+```
+Create the dimension of filter & convolution 
+```
+std::tuple<int, int, int> dimensions = std::make_tuple(28,28,1);
+std::tuple<int, int, int> filter = std::make_tuple(3,3,2);
+
+```
+Create the different layer 
+```
+Conv_layer* c1 = new Conv_layer(dimensions,filter,1,1);
+Activation_layer* acl1 = new Activation_layer(than);
+Flatten_layer* fl = new Flatten_layer();
+Fc_Layer* fc1 = new Fc_Layer(784*2,100);
+Activation_layer* acl2 = new Activation_layer(than);
+Fc_Layer* fc2 = new Fc_Layer(100,10);
+Activation_layer* acl3 = new Activation_layer(than);
+```
+Assign Layers to network 
+```
+net.Add(c1);
+net.Add(acl1);
+net.Add(fl);
+net.Add(fc1);
+net.Add(acl2);
+net.Add(fc2);
+net.Add(acl3);
+```
+Call fit function and predict with data samples 
+
+```
+net.Fit(train.data.images,train.data.labels,35,0.1,1);
+net.Predict(test.data.images);
+```

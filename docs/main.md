@@ -2,11 +2,13 @@ Neural                         {#mainpage}
 ============
 
 ## Description
-Neural is a library developed in C++ allowing the realization of artificial neural networks. It is intended to be simple to use and easy to install (Just create the Docker and start to code!). If you encounter any problem, don't hesitate to let me know. 
+Neural is a framework developed in C++ allowing the realization of artificial neural networks. This framework includes a library for the realization of neural networks, a powerful linear algebra library (Eigen), a docker image to facilitate the implementation of CUDA and Open GL, and a graphical visualization library for displaying and debugging the neural network. This framework is easy to use, and to install. If you encounter any problems, don't hesitate to report them. 
 
-It is built on the basis of eigen which allows to facilitate the manipulation of data structures, and to have various functions of manipulation of matrices or lists. Moreover, Neural has natively a multi-threading function which allows you to easily add the number of threads you want to allocate to optimize the performances you need.
+Some operations are already supported on CUDA like matrix multiplication. Other functions like cross-correlation and convolution are currently under development. For more informations about this subject, thanks to refer to Cuda Support.
 
-Moreover, some operations are already supported on CUDA like matrix multiplication. Other functions like cross-correlation and convolution are currently under development. For more informations about this subject, thanks to refer to Cuda Support.
+
+### Linear Algebric  
+The Neural API is built on the basis of Eigen. [Eigen](https://eigen.tuxfamily.org/index.php?title=Main_Page) is a numerical analysis library in C++ composed of template headers. 
 
 ### Neural networks Components
 
@@ -25,9 +27,10 @@ Research : In the research phase
 Type          | Status                        |
 ------------------- | ------                  |
 SGD                 | \emoji heavy_check_mark |
-Adam                | \emoji soon   |
-Adagrad             | \emoji x |
-Momentum            | \emoji x |
+Momentum            | \emoji soon             |
+Nesterov            | \emoji soon             |
+Adam                | \emoji x                |
+Adagrad             | \emoji x                |
 
 </td><td>
 

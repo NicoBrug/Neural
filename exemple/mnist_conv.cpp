@@ -44,13 +44,13 @@ int main() {
     net.Use(mse);
 
     //Create configuration of network
-    Conv_layer* c1 = new Conv_layer(dimensions,filter,1,1);
-    Activation_layer* acl1 = new Activation_layer(than);
-    Flatten_layer* fl = new Flatten_layer();
+    Conv_Layer* c1 = new Conv_Layer(dimensions,filter,1,1);
+    Activation_Layer* acl1 = new Activation_Layer(than);
+    Flatten_Layer* fl = new Flatten_Layer();
     Fc_Layer* fc1 = new Fc_Layer(784*2,100);
-    Activation_layer* acl2 = new Activation_layer(than);
+    Activation_Layer* acl2 = new Activation_Layer(than);
     Fc_Layer* fc2 = new Fc_Layer(100,10);
-    Activation_layer* acl3 = new Activation_layer(than);
+    Activation_Layer* acl3 = new Activation_Layer(than);
 
 
     //Add the configuration to network
@@ -63,10 +63,10 @@ int main() {
     net.Add(acl3);
 
     //Fit the network with MNIST image & label
-    net.Fit(train.data.images,train.data.labels,35,0.1,1);
+    //net.Fit(train.data.images,train.data.labels,35,0.1,1);
 
     //Make prediction for verify the network
-    net.Predict(test.data.images);
+    //net.Predict(test.data.images);
 
     //Print true result
     cout << "result true \n" << test.data.labels << endl;

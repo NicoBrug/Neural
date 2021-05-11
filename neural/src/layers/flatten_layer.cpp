@@ -1,3 +1,12 @@
+/**
+ * \file flatten_layer.cpp
+ * \brief  flatten layer
+ * \author Brugie Nicolas
+ * \version 0.1
+ *
+ * Class allowing the creation of an Dense/Full flatten layer within a neural network.
+ *
+ */
 #include "../../includes/layers/flatten_layer.h"
 
 using namespace Eigen;
@@ -7,11 +16,11 @@ using namespace Neural;
 typedef Matrix<double,Dynamic,Dynamic,RowMajor> RowMajMat; 
 
 
-Flatten_layer::Flatten_layer(){
+Flatten_Layer::Flatten_Layer(){
 
 };
 
-MatrixXd Flatten_layer::Forward_propagation(MatrixXd input_data){
+MatrixXd Flatten_Layer::Forward_propagation(MatrixXd input_data){
     this->m_input = input_data;
     Map<MatrixXd> out(this->m_input.data(), 1,this->m_input.size());
     this->m_output = out;
@@ -26,12 +35,12 @@ MatrixXd Flatten_layer::Forward_propagation(MatrixXd input_data){
  *  @return Matrix of derived activation function 
  * 
  */
-MatrixXd Flatten_layer::Backward_propagation(MatrixXd output_error, float learning_rate){
+MatrixXd Flatten_Layer::Backward_propagation(MatrixXd output_error, float learning_rate){
     Map<MatrixXd> out_err(output_error.data(), this->m_input.rows(),this->m_input.cols());
     return out_err;
 };
 
-Json::Value Flatten_layer::toJSON(){
+Json::Value Flatten_Layer::toJSON(){
     Json::Value json;
 
     json["type"] = "FlattenLayer" ;

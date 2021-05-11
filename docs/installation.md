@@ -14,7 +14,7 @@ git clone https://github.com/NicoBrug/Neural.git
 
 Ok, first let's start by get the image (the development environment). 
 ```
-docker push nickoslab/neural:alpha
+docker pull nickoslab/neural:alpha
 ```
 Now we need to create the container. To do this we need to specify that we want to "share" the folder with our container. (path = The path to the folder where Neural is located )
 ```
@@ -28,7 +28,7 @@ sudo docker run \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v ~/Documents/neuralnetworks/Neural:/home/Projects/Neural \
     --name NeuralGL \
-    -t neural:alpha /bin/bash 
+    -t nickoslab/neural:alpha /bin/bash 
 ```
 \section InstallationPageSec3  Nvidia & Cuda
 Once the container is launched, you can check the installation of the drivers with : 
