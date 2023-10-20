@@ -1,8 +1,8 @@
 ![Screenshot](pics/logo.png?raw=true )
 ## Description
-Neural is a framework developed in C++ allowing the realization of artificial neural networks. It is intended to be simple to use and easy to install (Just create the Docker and start to code!). If you encounter any problem, don't hesitate to let me know. 
-It's works with a docker image, which allows to quickly install and configure CUDA and OpenGL as well as the necessary tools for data visualization. 
-To access the installation guide, API documentation and tools please visit the [Website](https://nicobrug.github.io/NeuralDocs/). 
+I'd like to introduce you to Neural, a small project I developed in a week. It's a C++ tool for experimenting with artificial neural networks. It's designed to be easy to use and straightforward to set up (simply create the Docker container and start coding!). If you encounter any issues, please don't hesitate to let me know. The tool works with a Docker image, allowing for quick installation and configuration of CUDA and OpenGL, as well as the necessary tools for data visualization. To access the installation guide, API documentation, and tools, please visit our website.
+
+[Website](https://nicobrug.github.io/NeuralDocs/). 
 
 
 ## Exemple
